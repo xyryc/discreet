@@ -1,15 +1,31 @@
+# IDEs & Editors
+.idea/
 *.iml
-.gradle
-/local.properties
-/.idea/caches
-/.idea/libraries
-/.idea/modules.xml
-/.idea/workspace.xml
-/.idea/navEditor.xml
-/.idea/assetWizardSettings.xml
-.DS_Store
-/build
-/captures
-.externalNativeBuild
-.cxx
+.vscode/
+*.swp
+*.swo
+
+# Gradle & Android Build Artifacts
+.gradle/
+build/
+*/build/
+captures/
+.externalNativeBuild/
+.cxx/
 local.properties
+*/local.properties
+
+# Maven & Java / Spring Boot Artifacts
+target/
+*/target/
+*.class
+*.jar
+*.war
+
+# Environment & Secrets
+.env
+*.env.local
+
+# OS Specific
+.DS_Store
+Thumbs.db
