@@ -15,5 +15,5 @@ dependencyResolutionManagement {
         }
     }
 }
-rootProject.name = "ChatApplication"
+rootProject.name = "Discreet"
 include ':app'
