@@ -95,24 +95,38 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item){
-        //handle actionbar item click here. The actionbar will
-        //automatically handle clicks on the Home/Up button, so
-        //long as you specify a parent activity in AndroidManifest.xml
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here.
         int id = item.getItemId();
 
-        switch (id){
-            case R.id.menu_search : Toast.makeText(MainActivity.this, "Action Search", Toast.LENGTH_LONG).show();
-                startActivity(new Intent(MainActivity.this, ContactsActivity.class));
-                break;
-            case R.id.action_new_group: Toast.makeText(MainActivity.this, "Action New Group", Toast.LENGTH_LONG).show(); break;
-            case R.id.action_new_broadcast: Toast.makeText(MainActivity.this, "Action Broadcast", Toast.LENGTH_LONG).show(); break;
-            case R.id.action_royalchat_web: Toast.makeText(MainActivity.this, "Action Web", Toast.LENGTH_LONG).show(); break;
-            case R.id.action_started_message: Toast.makeText(MainActivity.this, "Action Starred Message", Toast.LENGTH_LONG).show(); break;
-            case R.id.action_settings:
-                startActivity(new Intent(MainActivity.this, SettingsActivity.class));
-                break;
+        // Using if-else instead of switch-case because Resource IDs are non-final in AGP 8+
+        if (id == R.id.menu_search) {
+            // Open contact search screen
+            Toast.makeText(MainActivity.this, "Action Search", Toast.LENGTH_LONG).show();
+            startActivity(new Intent(MainActivity.this, ContactsActivity.class));
+            return true;
+        } else if (id == R.id.action_new_group) {
+            // Create a new group chat
+            Toast.makeText(MainActivity.this, "Action New Group", Toast.LENGTH_LONG).show();
+            return true;
+        } else if (id == R.id.action_new_broadcast) {
+            // Create a new broadcast list
+            Toast.makeText(MainActivity.this, "Action Broadcast", Toast.LENGTH_LONG).show();
+            return true;
+        } else if (id == R.id.action_royalchat_web) {
+            // Link web client / QR code sync
+            Toast.makeText(MainActivity.this, "Action Web", Toast.LENGTH_LONG).show();
+            return true;
+        } else if (id == R.id.action_started_message) {
+            // View starred / bookmarked messages
+            Toast.makeText(MainActivity.this, "Action Starred Message", Toast.LENGTH_LONG).show();
+            return true;
+        } else if (id == R.id.action_settings) {
+            // Navigate to user settings screen
+            startActivity(new Intent(MainActivity.this, SettingsActivity.class));
+            return true;
         }
+
         return super.onOptionsItemSelected(item);
     }
 
