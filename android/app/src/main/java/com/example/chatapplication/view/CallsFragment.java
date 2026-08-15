@@ -1,4 +1,4 @@
-package com.example.chatapplication.menu;
+package com.example.chatapplication.view;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,7 +16,7 @@ import com.example.chatapplication.R;
 import com.example.chatapplication.adapter.CallListAdapter;
 import com.example.chatapplication.data.MockDataService;
 import com.example.chatapplication.databinding.FragmentCallsBinding;
-import com.example.chatapplication.model.CallList;
+import com.example.chatapplication.model.CallItem;
 import com.example.chatapplication.view.contact.ContactsActivity;
 
 import java.util.List;
@@ -54,7 +53,7 @@ public class CallsFragment extends Fragment {
 
     private void setupCallsRecycler() {
         binding.recyclerViewCalls.setLayoutManager(new LinearLayoutManager(getContext()));
-        List<CallList> calls = mockDataService.getCallHistory();
+        List<CallItem> calls = mockDataService.getCallHistory();
         callListAdapter = new CallListAdapter(calls, getContext());
         binding.recyclerViewCalls.setAdapter(callListAdapter);
     }
@@ -120,7 +119,7 @@ public class CallsFragment extends Fragment {
 
     private void refreshCalls() {
         if (callListAdapter != null) {
-            List<CallList> calls = mockDataService.getCallHistory();
+            List<CallItem> calls = mockDataService.getCallHistory();
             callListAdapter.updateList(calls);
             if (isMissedOnlyFilter) {
                 callListAdapter.filterMissedOnly(true);

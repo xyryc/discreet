@@ -1,6 +1,6 @@
 package com.example.chatapplication.model;
 
-public class CallList {
+public class CallItem {
     private String userID;
     private String userName;
     private String date;
@@ -9,10 +9,10 @@ public class CallList {
     private boolean isVideo;
     private String duration;
 
-    public CallList() {
+    public CallItem() {
     }
 
-    public CallList(String userID, String userName, String date, String urlProfile, String callType) {
+    public CallItem(String userID, String userName, String date, String urlProfile, String callType) {
         this.userID = userID;
         this.userName = userName;
         this.date = date;
@@ -22,7 +22,7 @@ public class CallList {
         this.duration = "2m 14s";
     }
 
-    public CallList(String userID, String userName, String date, String urlProfile, String callType, boolean isVideo, String duration) {
+    public CallItem(String userID, String userName, String date, String urlProfile, String callType, boolean isVideo, String duration) {
         this.userID = userID;
         this.userName = userName;
         this.date = date;

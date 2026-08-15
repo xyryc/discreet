@@ -1,4 +1,4 @@
-package com.example.chatapplication.menu;
+package com.example.chatapplication.view;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,8 +17,8 @@ import com.example.chatapplication.adapter.ActiveContactsAdapter;
 import com.example.chatapplication.adapter.ChatListAdapter;
 import com.example.chatapplication.data.MockDataService;
 import com.example.chatapplication.databinding.FragmentChatsBinding;
-import com.example.chatapplication.model.ChatList;
-import com.example.chatapplication.model.user.Users;
+import com.example.chatapplication.model.ChatItem;
+import com.example.chatapplication.model.User;
 import com.example.chatapplication.view.contact.ContactsActivity;
 
 import java.util.List;
@@ -56,7 +56,7 @@ public class ChatsFragment extends Fragment {
 
     private void setupChatsRecycler() {
         binding.recyclerViewChats.setLayoutManager(new LinearLayoutManager(getContext()));
-        List<ChatList> chats = mockDataService.getRecentChats();
+        List<ChatItem> chats = mockDataService.getRecentChats();
         chatListAdapter = new ChatListAdapter(chats, getContext());
         binding.recyclerViewChats.setAdapter(chatListAdapter);
 
@@ -65,14 +65,14 @@ public class ChatsFragment extends Fragment {
 
     private void setupActiveContactsRecycler() {
         binding.recyclerViewStories.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-        List<Users> contacts = mockDataService.getContacts();
+        List<User> contacts = mockDataService.getContacts();
         activeContactsAdapter = new ActiveContactsAdapter(contacts, getContext());
         binding.recyclerViewStories.setAdapter(activeContactsAdapter);
     }
 
-    private void updateUnreadHeader(List<ChatList> chats) {
+    private void updateUnreadHeader(List<ChatItem> chats) {
         int unreadTotal = 0;
-        for (ChatList chat : chats) {
+        for (ChatItem chat : chats) {
             if (chat.getUnreadCount() > 0) {
                 unreadTotal++;
             }
@@ -113,7 +113,7 @@ public class ChatsFragment extends Fragment {
 
     private void refreshChats() {
         if (chatListAdapter != null) {
-            List<ChatList> chats = mockDataService.getRecentChats();
+            List<ChatItem> chats = mockDataService.getRecentChats();
             chatListAdapter.updateList(chats);
             updateUnreadHeader(chats);
         }

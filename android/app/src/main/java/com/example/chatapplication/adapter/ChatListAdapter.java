@@ -13,89 +13,84 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.chatapplication.R;
-import com.example.chatapplication.model.ChatList;
+import com.example.chatapplication.model.ChatItem;
 import com.example.chatapplication.view.chats.ChatsActivity;
-import com.google.android.material.imageview.ShapeableImageView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.Holder> {
-    private List<ChatList> list;
-    private final List<ChatList> fullList;
+public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHolder> {
+    private List<ChatItem> list;
+    private final List<ChatItem> fullList;
     private final Context context;
 
-    public ChatListAdapter(List<ChatList> list, Context context) {
+    public ChatListAdapter(List<ChatItem> list, Context context) {
         this.list = new ArrayList<>(list);
         this.fullList = new ArrayList<>(list);
         this.context = context;
     }
 
-    public void updateList(List<ChatList> newList) {
-        this.list = new ArrayList<>(newList);
+    public void updateList(List<ChatItem> newList) {
         this.fullList.clear();
         this.fullList.addAll(newList);
+        this.list.clear();
+        this.list.addAll(newList);
         notifyDataSetChanged();
     }
 
     public void filter(String query) {
+        list.clear();
         if (query == null || query.trim().isEmpty()) {
-            list = new ArrayList<>(fullList);
+            list.addAll(fullList);
         } else {
             String lowerQuery = query.toLowerCase().trim();
-            List<ChatList> filtered = new ArrayList<>();
-            for (ChatList item : fullList) {
-                if (item.getUserName().toLowerCase().contains(lowerQuery) ||
-                    (item.getDescription() != null && item.getDescription().toLowerCase().contains(lowerQuery))) {
-                    filtered.add(item);
+            for (ChatItem item : fullList) {
+                if (item.getUserName() != null && item.getUserName().toLowerCase().contains(lowerQuery)) {
+                    list.add(item);
+                } else if (item.getDescription() != null && item.getDescription().toLowerCase().contains(lowerQuery)) {
+                    list.add(item);
                 }
             }
-            list = filtered;
         }
         notifyDataSetChanged();
     }
 
     @NonNull
     @Override
-    public Holder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.layout_chat_list, parent, false);
-        return new Holder(view);
+        return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull Holder holder, int position) {
-        ChatList chat = list.get(position);
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        ChatItem chat = list.get(position);
 
-        holder.tvName.setText(chat.getUserName());
+        holder.tvUsername.setText(chat.getUserName());
         holder.tvDesc.setText(chat.getDescription());
         holder.tvDate.setText(chat.getDate());
 
-        // Online status indicator
-        holder.onlineIndicator.setVisibility(chat.isOnline() ? View.VISIBLE : View.GONE);
-
-        // Read status checkmark
-        if (chat.isRead()) {
-            holder.iconReadStatus.setVisibility(View.VISIBLE);
-            holder.iconReadStatus.setImageResource(R.drawable.ic_baseline_done_all_24);
+        if (chat.getUrlProfile() != null && !chat.getUrlProfile().isEmpty()) {
+            Glide.with(context).load(chat.getUrlProfile()).into(holder.imageProfile);
         } else {
-            holder.iconReadStatus.setVisibility(View.GONE);
+            holder.imageProfile.setImageResource(R.drawable.icon_person);
         }
 
-        // Unread badge count
+        // Unread badge logic
         if (chat.getUnreadCount() > 0) {
             holder.tvUnreadBadge.setVisibility(View.VISIBLE);
             holder.tvUnreadBadge.setText(String.valueOf(chat.getUnreadCount()));
+            holder.tvDate.setTextColor(context.getResources().getColor(R.color.neu_accent));
         } else {
             holder.tvUnreadBadge.setVisibility(View.GONE);
+            holder.tvDate.setTextColor(context.getResources().getColor(R.color.neu_text_muted));
         }
 
-        // Load avatar with Glide
-        Glide.with(context)
-                .load(chat.getUrlProfile())
-                .placeholder(R.drawable.icon_person)
-                .into(holder.profile);
+        // Online presence dot
+        if (holder.viewOnlineDot != null) {
+            holder.viewOnlineDot.setVisibility(chat.isOnline() ? View.VISIBLE : View.GONE);
+        }
 
-        // Click action -> Opens direct chat conversation
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(context, ChatsActivity.class);
             intent.putExtra("userID", chat.getUserID());
@@ -110,21 +105,19 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.Holder
         return list.size();
     }
 
-    public static class Holder extends RecyclerView.ViewHolder {
-        private final TextView tvName, tvDesc, tvDate, tvUnreadBadge;
-        private final ShapeableImageView profile;
-        private final View onlineIndicator;
-        private final ImageView iconReadStatus;
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        private final ImageView imageProfile;
+        private final TextView tvUsername, tvDesc, tvDate, tvUnreadBadge;
+        private final View viewOnlineDot;
 
-        public Holder(@NonNull View itemView) {
+        public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            tvName = itemView.findViewById(R.id.tv_name);
+            imageProfile = itemView.findViewById(R.id.image_profile);
+            tvUsername = itemView.findViewById(R.id.tv_username);
             tvDesc = itemView.findViewById(R.id.tv_desc);
             tvDate = itemView.findViewById(R.id.tv_date);
             tvUnreadBadge = itemView.findViewById(R.id.tv_unread_badge);
-            profile = itemView.findViewById(R.id.image_profile);
-            onlineIndicator = itemView.findViewById(R.id.view_online_indicator);
-            iconReadStatus = itemView.findViewById(R.id.icon_read_status);
+            viewOnlineDot = itemView.findViewById(R.id.view_online_dot);
         }
     }
 }

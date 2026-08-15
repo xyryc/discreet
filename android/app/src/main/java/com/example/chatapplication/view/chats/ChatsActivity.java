@@ -19,7 +19,7 @@ import com.example.chatapplication.adapter.ChatsAdapter;
 import com.example.chatapplication.data.MockDataService;
 import com.example.chatapplication.data.SessionManager;
 import com.example.chatapplication.databinding.ActivityChatsBinding;
-import com.example.chatapplication.model.chat.Chats;
+import com.example.chatapplication.model.ChatMessage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +30,7 @@ public class ChatsActivity extends AppCompatActivity {
     private String receiverID;
     private String receiverName;
     private ChatsAdapter adapter;
-    private List<Chats> list;
+    private List<ChatMessage> list;
     private String currentUserId;
 
     @Override
@@ -112,7 +112,7 @@ public class ChatsActivity extends AppCompatActivity {
     }
 
     private void readChats() {
-        List<Chats> messages = MockDataService.getInstance().getMessages(receiverID);
+        List<ChatMessage> messages = MockDataService.getInstance().getMessages(receiverID);
         list.clear();
         list.addAll(messages);
 

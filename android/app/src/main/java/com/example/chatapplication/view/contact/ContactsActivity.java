@@ -15,7 +15,7 @@ import com.example.chatapplication.adapter.ContactsAdapter;
 import com.example.chatapplication.data.MockDataService;
 import com.example.chatapplication.data.SessionManager;
 import com.example.chatapplication.databinding.ActivityContactsBinding;
-import com.example.chatapplication.model.user.Users;
+import com.example.chatapplication.model.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +23,7 @@ import java.util.List;
 public class ContactsActivity extends AppCompatActivity {
 
     private ActivityContactsBinding binding;
-    private final List<Users> list = new ArrayList<>();
+    private final List<User> list = new ArrayList<>();
     private ContactsAdapter adapter;
 
     @Override
@@ -68,10 +68,10 @@ public class ContactsActivity extends AppCompatActivity {
 
     private void getContactList() {
         String currentUserId = SessionManager.getInstance(this).getUserId();
-        List<Users> allUsers = MockDataService.getInstance().getContacts();
+        List<User> allUsers = MockDataService.getInstance().getContacts();
 
         list.clear();
-        for (Users user : allUsers) {
+        for (User user : allUsers) {
             if (user.getUserID() != null && !user.getUserID().equals(currentUserId)) {
                 list.add(user);
             }

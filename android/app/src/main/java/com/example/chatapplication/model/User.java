@@ -1,6 +1,6 @@
-package com.example.chatapplication.model.user;
+package com.example.chatapplication.model;
 
-public class Users {
+public class User {
     private String userID;
     private String userName;
     private String userPhone;
@@ -12,10 +12,10 @@ public class Users {
     private String status;
     private String bio;
 
-    public Users(){
+    public User() {
     }
 
-    public Users(String userID, String userName, String userPhone, String imageProfile, String imageCover, String email, String dateOfBirth, String gender, String status, String bio) {
+    public User(String userID, String userName, String userPhone, String imageProfile, String imageCover, String email, String dateOfBirth, String gender, String status, String bio) {
         this.userID = userID;
         this.userName = userName;
         this.userPhone = userPhone;
@@ -27,7 +27,6 @@ public class Users {
         this.status = status;
         this.bio = bio;
     }
-
 
     public String getUserID() {
         return userID;

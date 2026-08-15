@@ -1,4 +1,4 @@
-package com.example.chatapplication.menu;
+package com.example.chatapplication.view;
 
 import android.content.DialogInterface;
 import android.content.Intent;

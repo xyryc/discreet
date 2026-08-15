@@ -1,4 +1,4 @@
-package com.example.chatapplication.menu;
+package com.example.chatapplication.view;
 
 import android.content.Intent;
 import android.os.Bundle;

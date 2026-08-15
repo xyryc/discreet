@@ -12,18 +12,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.chatapplication.R;
 import com.example.chatapplication.data.SessionManager;
-import com.example.chatapplication.model.chat.Chats;
+import com.example.chatapplication.model.ChatMessage;
 
 import java.util.List;
 
 public class ChatsAdapter extends RecyclerView.Adapter<ChatsAdapter.ViewHolder> {
-    private final List<Chats> list;
+    private final List<ChatMessage> list;
     private final Context context;
     private final String currentUserId;
     public static final int MSG_TYPE_LEFT = 0;
     public static final int MSG_TYPE_RIGHT = 1;
 
-    public ChatsAdapter(List<Chats> list, Context context) {
+    public ChatsAdapter(List<ChatMessage> list, Context context) {
         this.list = list;
         this.context = context;
         this.currentUserId = SessionManager.getInstance(context).getUserId();
@@ -63,7 +63,7 @@ public class ChatsAdapter extends RecyclerView.Adapter<ChatsAdapter.ViewHolder> 
             imageProfile = itemView.findViewById(R.id.image_profile);
         }
 
-        void bind(Chats chats) {
+        void bind(ChatMessage chats) {
             if (textMessage != null) {
                 textMessage.setText(chats.getTextMessage());
             }

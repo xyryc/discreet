@@ -1,16 +1,16 @@
-package com.example.chatapplication.model.chat;
+package com.example.chatapplication.model;
 
-public class Chats {
+public class ChatMessage {
     private String dateTime;
     private String textMessage;
     private String type;
     private String sender;
     private String receiver;
 
-    public Chats(){
+    public ChatMessage() {
     }
 
-    public Chats(String dateTime, String textMessage, String type, String sender, String receiver) {
+    public ChatMessage(String dateTime, String textMessage, String type, String sender, String receiver) {
         this.dateTime = dateTime;
         this.textMessage = textMessage;
         this.type = type;

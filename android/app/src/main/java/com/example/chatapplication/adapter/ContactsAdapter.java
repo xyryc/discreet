@@ -13,18 +13,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.chatapplication.R;
-import com.example.chatapplication.model.user.Users;
+import com.example.chatapplication.model.User;
 import com.example.chatapplication.view.chats.ChatsActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.ViewHolder> {
-    private List<Users> list;
-    private final List<Users> fullList;
+    private List<User> list;
+    private final List<User> fullList;
     private final Context context;
 
-    public ContactsAdapter(List<Users> list, Context context) {
+    public ContactsAdapter(List<User> list, Context context) {
         this.list = new ArrayList<>(list);
         this.fullList = new ArrayList<>(list);
         this.context = context;
@@ -36,7 +36,7 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.ViewHo
             list.addAll(fullList);
         } else {
             String lowerQuery = query.toLowerCase().trim();
-            for (Users user : fullList) {
+            for (User user : fullList) {
                 if (user.getUserName() != null && user.getUserName().toLowerCase().contains(lowerQuery)) {
                     list.add(user);
                 } else if (user.getBio() != null && user.getBio().toLowerCase().contains(lowerQuery)) {
@@ -56,7 +56,7 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        final Users user = list.get(position);
+        final User user = list.get(position);
 
         holder.username.setText(user.getUserName());
         holder.desc.setText(user.getBio() != null && !user.getBio().isEmpty() ? user.getBio() : "Available on Discreet");

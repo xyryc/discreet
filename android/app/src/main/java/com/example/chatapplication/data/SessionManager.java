@@ -3,7 +3,7 @@ package com.example.chatapplication.data;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.example.chatapplication.model.user.Users;
+import com.example.chatapplication.model.User;
 
 public class SessionManager {
     private static final String PREF_NAME = "discreet_session";
@@ -55,7 +55,7 @@ public class SessionManager {
     }
 
     public String getUserPhone() {
-        return pref.getString(KEY_USER_PHONE, "+1234567890");
+        return pref.getString(KEY_USER_PHONE, "+1 (555) 019-2834");
     }
 
     public String getUserName() {
@@ -74,8 +74,8 @@ public class SessionManager {
         return pref.getString(KEY_AUTH_TOKEN, "");
     }
 
-    public Users getCurrentUser() {
-        Users user = new Users();
+    public User getCurrentUser() {
+        User user = new User();
         user.setUserID(getUserId());
         user.setUserName(getUserName());
         user.setUserPhone(getUserPhone());

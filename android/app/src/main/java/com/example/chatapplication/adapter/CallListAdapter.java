@@ -1,87 +1,109 @@
 package com.example.chatapplication.adapter;
 
 import android.content.Context;
-import android.content.res.ColorStateList;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.chatapplication.R;
-import com.example.chatapplication.model.CallList;
-import com.google.android.material.imageview.ShapeableImageView;
+import com.example.chatapplication.model.CallItem;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class CallListAdapter extends RecyclerView.Adapter<CallListAdapter.Holder> {
-    private List<CallList> list;
-    private final List<CallList> fullList;
+public class CallListAdapter extends RecyclerView.Adapter<CallListAdapter.ViewHolder> {
+    private List<CallItem> list;
+    private final List<CallItem> fullList;
     private final Context context;
 
-    public CallListAdapter(List<CallList> list, Context context) {
+    public CallListAdapter(List<CallItem> list, Context context) {
         this.list = new ArrayList<>(list);
         this.fullList = new ArrayList<>(list);
         this.context = context;
     }
 
-    public void updateList(List<CallList> newList) {
-        this.list = new ArrayList<>(newList);
-        this.fullList.clear();
-        this.fullList.addAll(newList);
+    public void filter(String query) {
+        list.clear();
+        if (query == null || query.trim().isEmpty()) {
+            list.addAll(fullList);
+        } else {
+            String lowerQuery = query.toLowerCase().trim();
+            for (CallItem item : fullList) {
+                if (item.getUserName() != null && item.getUserName().toLowerCase().contains(lowerQuery)) {
+                    list.add(item);
+                }
+            }
+        }
         notifyDataSetChanged();
     }
 
     public void filterMissedOnly(boolean missedOnly) {
+        list.clear();
         if (!missedOnly) {
-            list = new ArrayList<>(fullList);
+            list.addAll(fullList);
         } else {
-            List<CallList> filtered = new ArrayList<>();
-            for (CallList item : fullList) {
+            for (CallItem item : fullList) {
                 if ("MISSED".equalsIgnoreCase(item.getCallType())) {
-                    filtered.add(item);
+                    list.add(item);
                 }
             }
-            list = filtered;
         }
+        notifyDataSetChanged();
+    }
+
+    public void updateList(List<CallItem> newList) {
+        this.fullList.clear();
+        this.fullList.addAll(newList);
+        this.list.clear();
+        this.list.addAll(newList);
         notifyDataSetChanged();
     }
 
     @NonNull
     @Override
-    public Holder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.layout_call_list, parent, false);
-        return new Holder(view);
+        return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull Holder holder, int position) {
-        CallList call = list.get(position);
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        CallItem call = list.get(position);
 
         holder.tvName.setText(call.getUserName());
 
-        // Direction Arrow & Tint
-        String type = call.getCallType() != null ? call.getCallType().toUpperCase() : "INCOMING";
-        if ("MISSED".equals(type)) {
-            holder.imgCallDirection.setImageResource(R.drawable.ic_baseline_call_missed_24);
-            holder.imgCallDirection.setImageTintList(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.neu_danger)));
-        } else if ("OUTGOING".equals(type)) {
-            holder.imgCallDirection.setImageResource(R.drawable.ic_baseline_call_made_24);
-            holder.imgCallDirection.setImageTintList(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.neu_accent)));
+        if (call.getUrlProfile() != null && !call.getUrlProfile().isEmpty()) {
+            Glide.with(context).load(call.getUrlProfile()).into(holder.imageProfile);
         } else {
-            holder.imgCallDirection.setImageResource(R.drawable.ic_baseline_call_received_24);
-            holder.imgCallDirection.setImageTintList(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.neu_success)));
+            holder.imageProfile.setImageResource(R.drawable.icon_person);
         }
 
-        // Media Type Icon (Audio vs Video)
+        // Call Type Arrow indicator
+        if ("MISSED".equalsIgnoreCase(call.getCallType())) {
+            holder.imgCallDirection.setImageResource(R.drawable.ic_baseline_call_received_24);
+            holder.imgCallDirection.setColorFilter(context.getResources().getColor(R.color.neu_danger));
+            holder.tvCallInfo.setText(call.getDate() + " • Missed");
+            holder.tvCallInfo.setTextColor(context.getResources().getColor(R.color.neu_danger));
+        } else if ("OUTGOING".equalsIgnoreCase(call.getCallType())) {
+            holder.imgCallDirection.setImageResource(R.drawable.ic_baseline_call_made_24);
+            holder.imgCallDirection.setColorFilter(context.getResources().getColor(R.color.neu_accent));
+            holder.tvCallInfo.setText(call.getDate() + " • " + call.getDuration());
+            holder.tvCallInfo.setTextColor(context.getResources().getColor(R.color.neu_text_secondary));
+        } else {
+            holder.imgCallDirection.setImageResource(R.drawable.ic_baseline_call_received_24);
+            holder.imgCallDirection.setColorFilter(context.getResources().getColor(R.color.neu_success));
+            holder.tvCallInfo.setText(call.getDate() + " • " + call.getDuration());
+            holder.tvCallInfo.setTextColor(context.getResources().getColor(R.color.neu_text_secondary));
+        }
+
+        // Audio vs Video Action Icon
         if (call.isVideo()) {
             holder.imgCallMediaType.setImageResource(R.drawable.ic_baseline_videocam_24);
             holder.iconActionCall.setImageResource(R.drawable.ic_baseline_videocam_24);
@@ -90,29 +112,10 @@ public class CallListAdapter extends RecyclerView.Adapter<CallListAdapter.Holder
             holder.iconActionCall.setImageResource(R.drawable.ic_baseline_call_24);
         }
 
-        // Call Info (Date • Duration)
-        String duration = call.getDuration() != null ? call.getDuration() : "";
-        if (!duration.isEmpty()) {
-            holder.tvCallInfo.setText(call.getDate() + " • " + duration);
-        } else {
-            holder.tvCallInfo.setText(call.getDate());
-        }
-
-        // Load Avatar
-        Glide.with(context)
-                .load(call.getUrlProfile())
-                .placeholder(R.drawable.icon_person)
-                .into(holder.profile);
-
-        // Action Button -> Initiate Call
+        // Click Call Action
         holder.btnCallAction.setOnClickListener(v -> {
-            String mediaStr = call.isVideo() ? "Video" : "Voice";
-            Toast.makeText(context, "Initiating encrypted " + mediaStr + " call to " + call.getUserName() + "...", Toast.LENGTH_SHORT).show();
-        });
-
-        holder.itemView.setOnClickListener(v -> {
-            String mediaStr = call.isVideo() ? "Video" : "Voice";
-            Toast.makeText(context, "Call details with " + call.getUserName(), Toast.LENGTH_SHORT).show();
+            String type = call.isVideo() ? "Encrypted Video Call" : "Encrypted Voice Call";
+            Toast.makeText(context, "Starting " + type + " with " + call.getUserName() + "...", Toast.LENGTH_SHORT).show();
         });
     }
 
@@ -121,21 +124,20 @@ public class CallListAdapter extends RecyclerView.Adapter<CallListAdapter.Holder
         return list.size();
     }
 
-    public static class Holder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        private final ImageView imageProfile, imgCallDirection, imgCallMediaType, iconActionCall;
         private final TextView tvName, tvCallInfo;
-        private final ShapeableImageView profile;
-        private final ImageView imgCallDirection, imgCallMediaType, iconActionCall;
-        private final FrameLayout btnCallAction;
+        private final View btnCallAction;
 
-        public Holder(@NonNull View itemView) {
+        public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            imageProfile = itemView.findViewById(R.id.image_profile);
             tvName = itemView.findViewById(R.id.tv_name);
-            tvCallInfo = itemView.findViewById(R.id.tv_call_info);
-            profile = itemView.findViewById(R.id.image_profile);
             imgCallDirection = itemView.findViewById(R.id.img_call_direction);
             imgCallMediaType = itemView.findViewById(R.id.img_call_media_type);
-            iconActionCall = itemView.findViewById(R.id.icon_action_call);
+            tvCallInfo = itemView.findViewById(R.id.tv_call_info);
             btnCallAction = itemView.findViewById(R.id.btn_call_action);
+            iconActionCall = itemView.findViewById(R.id.icon_action_call);
         }
     }
 }

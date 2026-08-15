@@ -17,10 +17,6 @@ import android.widget.TextView;
 
 import com.example.chatapplication.R;
 import com.example.chatapplication.databinding.ActivityMainBinding;
-import com.example.chatapplication.menu.CallsFragment;
-import com.example.chatapplication.menu.ChatsFragment;
-import com.example.chatapplication.menu.HomeFragment;
-import com.example.chatapplication.menu.SettingsFragment;
 
 public class MainActivity extends AppCompatActivity {
 

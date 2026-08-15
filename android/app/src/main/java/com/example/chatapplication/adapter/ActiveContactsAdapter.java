@@ -13,16 +13,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.chatapplication.R;
-import com.example.chatapplication.model.user.Users;
+import com.example.chatapplication.model.User;
 import com.example.chatapplication.view.chats.ChatsActivity;
 
 import java.util.List;
 
 public class ActiveContactsAdapter extends RecyclerView.Adapter<ActiveContactsAdapter.ViewHolder> {
-    private final List<Users> list;
+    private final List<User> list;
     private final Context context;
 
-    public ActiveContactsAdapter(List<Users> list, Context context) {
+    public ActiveContactsAdapter(List<User> list, Context context) {
         this.list = list;
         this.context = context;
     }
@@ -36,7 +36,7 @@ public class ActiveContactsAdapter extends RecyclerView.Adapter<ActiveContactsAd
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Users user = list.get(position);
+        User user = list.get(position);
         holder.username.setText(user.getUserName());
 
         if (user.getImageProfile() != null && !user.getImageProfile().isEmpty()) {

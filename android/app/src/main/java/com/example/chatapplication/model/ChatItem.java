@@ -1,6 +1,6 @@
 package com.example.chatapplication.model;
 
-public class ChatList {
+public class ChatItem {
     private String userID;
     private String userName;
     private String description;
@@ -10,10 +10,10 @@ public class ChatList {
     private boolean isOnline;
     private boolean isRead;
 
-    public ChatList() {
+    public ChatItem() {
     }
 
-    public ChatList(String userID, String userName, String description, String date, String urlProfile) {
+    public ChatItem(String userID, String userName, String description, String date, String urlProfile) {
         this.userID = userID;
         this.userName = userName;
         this.description = description;
@@ -24,7 +24,7 @@ public class ChatList {
         this.isRead = true;
     }
 
-    public ChatList(String userID, String userName, String description, String date, String urlProfile, int unreadCount, boolean isOnline, boolean isRead) {
+    public ChatItem(String userID, String userName, String description, String date, String urlProfile, int unreadCount, boolean isOnline, boolean isRead) {
         this.userID = userID;
         this.userName = userName;
         this.description = description;
@@ -96,6 +96,6 @@ public class ChatList {
     }
 
     public void setRead(boolean read) {
-        isRead = read;
+        this.isRead = read;
     }
 }
