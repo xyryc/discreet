@@ -1,21 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="5dp"
-    android:layout_marginStart="5dp"
+    android:layout_marginHorizontal="6dp"
+    android:layout_marginVertical="1dp"
+    android:gravity="start|bottom"
     android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/tv_text_message"
+    <!-- Avatar with Neumorphic Ring -->
+    <FrameLayout
+        android:id="@+id/container_avatar"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="6dp"
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/bg_neu_avatar_ring"
+        android:padding="2.5dp">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/image_profile"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/icon_person"
+            app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Full" />
+    </FrameLayout>
+
+    <!-- Message Bubble (NeumorphCardView with real Gaussian blur) -->
+    <com.example.chatapplication.common.view.NeumorphCardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:neu_corner_radius="18dp"
+        app:neu_shadow_blur="7dp"
+        app:neu_shadow_distance="3.5dp">
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/bg_text_chat_left"
-            android:padding="10dp"
-            android:textSize="14sp"
-            android:textColor="@android:color/white"
-            android:layout_marginStart="10dp"
-            android:text="This is a text message"/>
+            android:maxWidth="260dp"
+            android:orientation="vertical"
+            android:paddingHorizontal="14dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="8dp">
+
+            <TextView
+                android:id="@+id/tv_text_message"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif"
+                android:lineSpacingExtra="2dp"
+                android:text="Hey there! How is the project going?"
+                android:textColor="@color/neu_text_primary"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tv_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginTop="4dp"
+                android:fontFamily="sans-serif-medium"
+                android:text="10:30 AM"
+                android:textColor="@color/neu_text_muted"
+                android:textSize="10sp" />
+        </LinearLayout>
+    </com.example.chatapplication.common.view.NeumorphCardView>
 
 </LinearLayout>

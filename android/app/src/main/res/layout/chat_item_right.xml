@@ -1,22 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:gravity="end"
-    android:layout_marginBottom="5dp"
-    android:layout_marginEnd="5dp"
+    android:layout_marginHorizontal="12dp"
+    android:layout_marginVertical="4dp"
+    android:gravity="end|bottom"
     android:orientation="horizontal">
+
+    <!-- Outgoing Message Bubble -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_text_chat_right"
+        android:maxWidth="280dp"
+        android:orientation="vertical"
+        android:paddingHorizontal="14dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="8dp">
 
         <TextView
             android:id="@+id/tv_text_message"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/bg_text_chat_right"
-            android:padding="10dp"
-            android:textSize="14sp"
-            android:textColor="@android:color/white"
-            android:layout_marginStart="10dp"
-            android:text="This is a text message"/>
+            android:fontFamily="sans-serif"
+            android:lineSpacingExtra="2dp"
+            android:text="Everything is ready! Testing the latest build right now."
+            android:textColor="#FFFFFF"
+            android:textSize="14sp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginTop="4dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-medium"
+                android:text="10:32 AM"
+                android:textColor="#D1D5DB"
+                android:textSize="10sp" />
+
+            <ImageView
+                android:id="@+id/icon_read_status"
+                android:layout_width="14dp"
+                android:layout_height="14dp"
+                android:layout_marginStart="4dp"
+                android:src="@drawable/ic_baseline_done_all_24"
+                app:tint="#FFFFFF" />
+        </LinearLayout>
+    </LinearLayout>
 
 </LinearLayout>

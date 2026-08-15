@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -52,20 +53,29 @@ public class ChatsAdapter extends RecyclerView.Adapter<ChatsAdapter.ViewHolder> 
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView textMessage;
+        private final TextView tvTime;
+        private final ImageView imageProfile;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             textMessage = itemView.findViewById(R.id.tv_text_message);
+            tvTime = itemView.findViewById(R.id.tv_time);
+            imageProfile = itemView.findViewById(R.id.image_profile);
         }
 
         void bind(Chats chats) {
-            textMessage.setText(chats.getTextMessage());
+            if (textMessage != null) {
+                textMessage.setText(chats.getTextMessage());
+            }
+            if (tvTime != null && chats.getDateTime() != null && !chats.getDateTime().isEmpty()) {
+                tvTime.setText(chats.getDateTime());
+            }
         }
     }
 
     @Override
     public int getItemViewType(int position) {
-        if (list.get(position).getSender().equals(currentUserId)) {
+        if (list.get(position).getSender() != null && list.get(position).getSender().equals(currentUserId)) {
             return MSG_TYPE_RIGHT;
         } else {
             return MSG_TYPE_LEFT;
