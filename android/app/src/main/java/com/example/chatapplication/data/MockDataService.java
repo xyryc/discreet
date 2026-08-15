@@ -69,13 +69,21 @@ public class MockDataService {
         mockChatLists.add(new ChatList("user_4", "Michael Scott", "That's what she said! 😂", "10/08/2026", 
                 "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150", 0, false, true));
 
-        // Mock Call List
+        // Mock Call List with audio/video and durations
         mockCallLists.add(new CallList("user_1", "Alex Morgan", "Today, 10:15 AM", 
-                "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150", "INCOMING"));
+                "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150", "INCOMING", false, "12m 45s"));
+
+        mockCallLists.add(new CallList("user_5", "Elena Rostova", "Today, 9:02 AM", 
+                "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150", "MISSED", true, "Missed"));
+
         mockCallLists.add(new CallList("user_2", "David Kim", "Yesterday, 6:45 PM", 
-                "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150", "OUTGOING"));
-        mockCallLists.add(new CallList("user_5", "Elena Rostova", "Aug 12, 2:30 PM", 
-                "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150", "MISSED"));
+                "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150", "OUTGOING", true, "24m 10s"));
+
+        mockCallLists.add(new CallList("user_3", "Sarah Connor", "Aug 12, 4:20 PM", 
+                "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150", "INCOMING", false, "5m 12s"));
+
+        mockCallLists.add(new CallList("user_4", "Michael Scott", "Aug 10, 1:15 PM", 
+                "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150", "MISSED", false, "Missed"));
 
         // Mock Message Thread for user_1
         List<Chats> user1Messages = new ArrayList<>();
