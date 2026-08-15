@@ -166,7 +166,7 @@ public class NeumorphCardView extends FrameLayout {
 
     @Override
     protected void dispatchDraw(Canvas canvas) {
-        if (isPressedState || shapeType == SHAPE_PRESSED) {
+        if (shapeType == SHAPE_PRESSED) {
             drawPressedState(canvas);
         } else {
             drawFlatState(canvas);
@@ -176,6 +176,23 @@ public class NeumorphCardView extends FrameLayout {
     }
 
     private void drawFlatState(Canvas canvas) {
+        float currentDistance = isPressedState ? (shadowDistance * 0.4f) : shadowDistance;
+
+        // Compute dynamic shadow rects based on touch state
+        lightShadowRect.set(
+                surfaceRect.left - currentDistance,
+                surfaceRect.top - currentDistance,
+                surfaceRect.right - currentDistance,
+                surfaceRect.bottom - currentDistance
+        );
+
+        darkShadowRect.set(
+                surfaceRect.left + currentDistance,
+                surfaceRect.top + currentDistance,
+                surfaceRect.right + currentDistance,
+                surfaceRect.bottom + currentDistance
+        );
+
         // 1. Draw Top-Left Light Glow Shadow (Gaussian Blur)
         canvas.drawRoundRect(lightShadowRect, cornerRadius, cornerRadius, lightShadowPaint);
 
