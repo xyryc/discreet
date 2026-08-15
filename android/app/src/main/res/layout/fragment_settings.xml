@@ -8,49 +8,29 @@
         android:layout_height="match_parent"
         android:background="@color/neu_background"
         android:fillViewport="true"
-        android:overScrollMode="never"
-        tools:context=".view.settings.SettingsActivity">
+        android:overScrollMode="never">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:paddingHorizontal="20dp"
-            android:paddingTop="24dp"
-            android:paddingBottom="48dp">
+            android:paddingTop="20dp"
+            android:paddingBottom="100dp">
 
             <!-- ========================================================= -->
-            <!-- 1. TOP HEADER BAR                                         -->
+            <!-- 1. TAB HEADER BAR                                         -->
             <!-- ========================================================= -->
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="24dp">
-
-                <!-- Neumorphic Back Button -->
-                <FrameLayout
-                    android:id="@+id/btn_back"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerVertical="true"
-                    android:background="@drawable/bg_neu_button_selector"
-                    android:clickable="true"
-                    android:focusable="true">
-
-                    <ImageView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:layout_gravity="center"
-                        android:src="@drawable/ic_baseline_arrow_back_24"
-                        app:tint="@color/neu_text_primary" />
-                </FrameLayout>
+                android:layout_marginBottom="20dp">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:gravity="center"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
                     android:orientation="vertical">
 
                     <TextView
@@ -59,7 +39,7 @@
                         android:fontFamily="sans-serif-medium"
                         android:text="Settings"
                         android:textColor="@color/neu_text_primary"
-                        android:textSize="20sp"
+                        android:textSize="24sp"
                         android:textStyle="bold" />
 
                     <TextView
@@ -67,14 +47,14 @@
                         android:layout_height="wrap_content"
                         android:text="Discreet Preferences"
                         android:textColor="@color/neu_text_secondary"
-                        android:textSize="12sp" />
+                        android:textSize="13sp" />
                 </LinearLayout>
 
-                <!-- Neumorphic QR Code / Share Button -->
+                <!-- Neumorphic QR Code Button -->
                 <FrameLayout
                     android:id="@+id/btn_qr_code"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:background="@drawable/bg_neu_button_selector"
@@ -103,7 +83,7 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:orientation="vertical"
-                android:padding="20dp">
+                android:padding="18dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -113,10 +93,10 @@
 
                     <!-- Avatar with Neumorphic Ring -->
                     <FrameLayout
-                        android:layout_width="72dp"
-                        android:layout_height="72dp"
+                        android:layout_width="68dp"
+                        android:layout_height="68dp"
                         android:background="@drawable/bg_neu_avatar_ring"
-                        android:padding="6dp">
+                        android:padding="5dp">
 
                         <com.google.android.material.imageview.ShapeableImageView
                             android:id="@+id/image_profile"
@@ -166,7 +146,6 @@
                             android:textSize="12sp" />
                     </LinearLayout>
 
-                    <!-- Chevron -->
                     <ImageView
                         android:layout_width="20dp"
                         android:layout_height="20dp"
@@ -178,12 +157,12 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="14dp"
                     android:background="@drawable/bg_neu_chip_inactive"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
                     android:paddingHorizontal="12dp"
-                    android:paddingVertical="6dp">
+                    android:paddingVertical="5dp">
 
                     <ImageView
                         android:layout_width="14dp"
@@ -225,7 +204,7 @@
                 android:layout_marginBottom="24dp"
                 android:background="@drawable/bg_neu_card"
                 android:orientation="vertical"
-                android:padding="18dp">
+                android:padding="16dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -233,15 +212,14 @@
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
-                    <!-- Squircle Icon Tile -->
                     <FrameLayout
-                        android:layout_width="42dp"
-                        android:layout_height="42dp"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
                         android:background="@drawable/bg_neu_icon_tile">
 
                         <ImageView
-                            android:layout_width="22dp"
-                            android:layout_height="22dp"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
                             android:layout_gravity="center"
                             android:src="@drawable/ic_baseline_palette_24"
                             app:tint="@color/neu_accent" />
@@ -277,7 +255,7 @@
                 <HorizontalScrollView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="14dp"
                     android:overScrollMode="never"
                     android:scrollbars="none">
 
@@ -286,7 +264,6 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
-                        <!-- Chip 1: Soft Light (Active Default) -->
                         <TextView
                             android:id="@+id/chip_theme_light"
                             android:layout_width="wrap_content"
@@ -301,7 +278,6 @@
                             android:textSize="12sp"
                             android:textStyle="bold" />
 
-                        <!-- Chip 2: Emerald Discreet -->
                         <TextView
                             android:id="@+id/chip_theme_emerald"
                             android:layout_width="wrap_content"
@@ -317,7 +293,6 @@
                             android:textColor="@color/neu_text_secondary"
                             android:textSize="12sp" />
 
-                        <!-- Chip 3: Royal Indigo -->
                         <TextView
                             android:id="@+id/chip_theme_royal"
                             android:layout_width="wrap_content"
@@ -333,7 +308,6 @@
                             android:textColor="@color/neu_text_secondary"
                             android:textSize="12sp" />
 
-                        <!-- Chip 4: Cyber Dark -->
                         <TextView
                             android:id="@+id/chip_theme_dark"
                             android:layout_width="wrap_content"
@@ -375,7 +349,7 @@
                 android:orientation="vertical"
                 android:padding="16dp">
 
-                <!-- Row 1: Privacy & Encryption -->
+                <!-- Row 1: Privacy -->
                 <LinearLayout
                     android:id="@+id/row_privacy"
                     android:layout_width="match_parent"
@@ -514,7 +488,7 @@
                 android:orientation="vertical"
                 android:padding="16dp">
 
-                <!-- Row 1: Chat Wallpaper & History -->
+                <!-- Row 1: Chat Wallpaper -->
                 <LinearLayout
                     android:id="@+id/row_chats"
                     android:layout_width="match_parent"
@@ -574,7 +548,7 @@
                     android:layout_marginVertical="6dp"
                     android:background="@color/neu_divider" />
 
-                <!-- Row 2: Notifications & Sounds -->
+                <!-- Row 2: Notifications -->
                 <LinearLayout
                     android:id="@+id/row_notifications"
                     android:layout_width="match_parent"
@@ -627,184 +601,11 @@
                         android:layout_height="wrap_content"
                         android:checked="true" />
                 </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginVertical="6dp"
-                    android:background="@color/neu_divider" />
-
-                <!-- Row 3: Data & Storage -->
-                <LinearLayout
-                    android:id="@+id/row_data_storage"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:paddingVertical="8dp">
-
-                    <FrameLayout
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:background="@drawable/bg_neu_icon_tile">
-
-                        <ImageView
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:layout_gravity="center"
-                            android:src="@drawable/ic_baseline_data_usage_24"
-                            app:tint="@color/neu_accent" />
-                    </FrameLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="14dp"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="sans-serif-medium"
-                            android:text="Data &amp; Storage Usage"
-                            android:textColor="@color/neu_text_primary"
-                            android:textSize="15sp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Cache: 12.4 MB • Auto-download"
-                            android:textColor="@color/neu_text_secondary"
-                            android:textSize="12sp" />
-                    </LinearLayout>
-
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:src="@drawable/ic_baseline_chevron_right_24"
-                        app:tint="@color/neu_text_muted" />
-                </LinearLayout>
             </LinearLayout>
 
 
             <!-- ========================================================= -->
-            <!-- 6. SECTION: APP INFO & HELP                               -->
-            <!-- ========================================================= -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:layout_marginBottom="10dp"
-                android:fontFamily="sans-serif-medium"
-                android:letterSpacing="0.05"
-                android:text="MORE"
-                android:textColor="@color/neu_text_muted"
-                android:textSize="12sp"
-                android:textStyle="bold" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="24dp"
-                android:background="@drawable/bg_neu_card"
-                android:orientation="vertical"
-                android:padding="16dp">
-
-                <!-- Invite Friends -->
-                <LinearLayout
-                    android:id="@+id/row_invite"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:paddingVertical="8dp">
-
-                    <FrameLayout
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:background="@drawable/bg_neu_icon_tile">
-
-                        <ImageView
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:layout_gravity="center"
-                            android:src="@drawable/ic_baseline_people_24"
-                            app:tint="@color/neu_accent" />
-                    </FrameLayout>
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="14dp"
-                        android:layout_weight="1"
-                        android:fontFamily="sans-serif-medium"
-                        android:text="Invite Friends to Discreet"
-                        android:textColor="@color/neu_text_primary"
-                        android:textSize="15sp" />
-
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:src="@drawable/ic_baseline_chevron_right_24"
-                        app:tint="@color/neu_text_muted" />
-                </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginVertical="6dp"
-                    android:background="@color/neu_divider" />
-
-                <!-- Help & FAQ -->
-                <LinearLayout
-                    android:id="@+id/row_help"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:paddingVertical="8dp">
-
-                    <FrameLayout
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:background="@drawable/bg_neu_icon_tile">
-
-                        <ImageView
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:layout_gravity="center"
-                            android:src="@drawable/ic_baseline_help_24"
-                            app:tint="@color/neu_accent" />
-                    </FrameLayout>
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="14dp"
-                        android:layout_weight="1"
-                        android:fontFamily="sans-serif-medium"
-                        android:text="Help &amp; Privacy Policy"
-                        android:textColor="@color/neu_text_primary"
-                        android:textSize="15sp" />
-
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:src="@drawable/ic_baseline_chevron_right_24"
-                        app:tint="@color/neu_text_muted" />
-                </LinearLayout>
-            </LinearLayout>
-
-
-            <!-- ========================================================= -->
-            <!-- 7. SIGN OUT BUTTON (NEUMORPHIC TACTILE DANGER)            -->
+            <!-- 6. SIGN OUT BUTTON (NEUMORPHIC TACTILE DANGER)            -->
             <!-- ========================================================= -->
             <FrameLayout
                 android:id="@+id/btn_logout"

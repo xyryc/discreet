@@ -1,157 +1,128 @@
 package com.example.chatapplication.view;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.viewpager.widget.ViewPager;
+import androidx.fragment.app.FragmentActivity;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
+import androidx.viewpager2.widget.ViewPager2;
 
-import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.os.Bundle;
-import android.os.Handler;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.Toast;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.example.chatapplication.R;
 import com.example.chatapplication.databinding.ActivityMainBinding;
 import com.example.chatapplication.menu.CallsFragment;
 import com.example.chatapplication.menu.ChatsFragment;
-import com.example.chatapplication.menu.StatusFragment;
-import com.example.chatapplication.view.contact.ContactsActivity;
-import com.example.chatapplication.view.settings.SettingsActivity;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.example.chatapplication.menu.HomeFragment;
+import com.example.chatapplication.menu.SettingsFragment;
 
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
+    private static final int TAB_HOME = 0;
+    private static final int TAB_CALLS = 1;
+    private static final int TAB_CHATS = 2;
+    private static final int TAB_SETTINGS = 3;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
-        setUpWithViewPager(binding.viewPager);
-        binding.tabLayout.setupWithViewPager(binding.viewPager);
-        setSupportActionBar(binding.toolbar);
+        setupViewPager();
+        setupBottomTabs();
+    }
 
-        binding.viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+    private void setupViewPager() {
+        MainTabsAdapter adapter = new MainTabsAdapter(this);
+        binding.viewPager.setAdapter(adapter);
+        binding.viewPager.setOffscreenPageLimit(3);
+        binding.viewPager.setUserInputEnabled(true); // Smooth swiping between tabs
 
-            }
-
+        binding.viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageSelected(int position) {
-                changeFabICon(position);
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
+                super.onPageSelected(position);
+                updateBottomTabUI(position);
             }
         });
-
     }
 
-    private void setUpWithViewPager(ViewPager viewPager){
-      MainActivity.SectionsPagerAdapter adapter = new SectionsPagerAdapter(getSupportFragmentManager());
-      adapter.addFragment(new ChatsFragment(), "Chats");
-      adapter.addFragment(new StatusFragment(), "Status");
-      adapter.addFragment(new CallsFragment(), "Calls");
-      viewPager.setAdapter(adapter);
+    private void setupBottomTabs() {
+        binding.tabHome.setOnClickListener(v -> binding.viewPager.setCurrentItem(TAB_HOME, true));
+        binding.tabCalls.setOnClickListener(v -> binding.viewPager.setCurrentItem(TAB_CALLS, true));
+        binding.tabChats.setOnClickListener(v -> binding.viewPager.setCurrentItem(TAB_CHATS, true));
+        binding.tabSettings.setOnClickListener(v -> binding.viewPager.setCurrentItem(TAB_SETTINGS, true));
     }
 
-    //add this code
-    private static class SectionsPagerAdapter extends FragmentPagerAdapter {
+    private void updateBottomTabUI(int selectedPosition) {
+        // Reset all 4 tabs
+        resetTab(binding.tabHome, binding.iconHome, binding.labelHome);
+        resetTab(binding.tabCalls, binding.iconCalls, binding.labelCalls);
+        resetTab(binding.tabChats, binding.iconChats, binding.labelChats);
+        resetTab(binding.tabSettings, binding.iconSettings, binding.labelSettings);
 
-        private final List<Fragment> mFragmentList = new ArrayList<>();
-        private final List<String> mFragmentTitleList = new ArrayList<>();
+        // Highlight selected tab
+        switch (selectedPosition) {
+            case TAB_HOME:
+                activateTab(binding.tabHome, binding.iconHome, binding.labelHome);
+                break;
+            case TAB_CALLS:
+                activateTab(binding.tabCalls, binding.iconCalls, binding.labelCalls);
+                break;
+            case TAB_CHATS:
+                activateTab(binding.tabChats, binding.iconChats, binding.labelChats);
+                break;
+            case TAB_SETTINGS:
+                activateTab(binding.tabSettings, binding.iconSettings, binding.labelSettings);
+                break;
+        }
+    }
 
-        public SectionsPagerAdapter(FragmentManager manager) {super(manager) ;}
+    private void resetTab(LinearLayout tabLayout, ImageView icon, TextView label) {
+        tabLayout.setBackground(null);
+        icon.setImageTintList(ColorStateList.valueOf(ContextCompat.getColor(this, R.color.neu_text_secondary)));
+        label.setTextColor(ContextCompat.getColor(this, R.color.neu_text_secondary));
+    }
 
-        @Override
-        public Fragment getItem(int position){return mFragmentList.get(position);}
+    private void activateTab(LinearLayout tabLayout, ImageView icon, TextView label) {
+        tabLayout.setBackgroundResource(R.drawable.bg_neu_tab_active);
+        icon.setImageTintList(ColorStateList.valueOf(ContextCompat.getColor(this, R.color.neu_accent)));
+        label.setTextColor(ContextCompat.getColor(this, R.color.neu_accent));
+    }
 
-        @Override
-        public  int getCount(){return mFragmentList.size();}
+    private static class MainTabsAdapter extends FragmentStateAdapter {
 
-        public void addFragment(Fragment fragment, String title) {
-            mFragmentList.add(fragment);
-            mFragmentTitleList.add(title);
+        public MainTabsAdapter(@NonNull FragmentActivity fragmentActivity) {
+            super(fragmentActivity);
         }
 
+        @NonNull
         @Override
-        public CharSequence getPageTitle(int position) {return mFragmentTitleList.get(position);}
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu){
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here.
-        int id = item.getItemId();
-
-        // Using if-else instead of switch-case because Resource IDs are non-final in AGP 8+
-        if (id == R.id.menu_search) {
-            // Open contact search screen
-            Toast.makeText(MainActivity.this, "Action Search", Toast.LENGTH_LONG).show();
-            startActivity(new Intent(MainActivity.this, ContactsActivity.class));
-            return true;
-        } else if (id == R.id.action_new_group) {
-            // Create a new group chat
-            Toast.makeText(MainActivity.this, "Action New Group", Toast.LENGTH_LONG).show();
-            return true;
-        } else if (id == R.id.action_new_broadcast) {
-            // Create a new broadcast list
-            Toast.makeText(MainActivity.this, "Action Broadcast", Toast.LENGTH_LONG).show();
-            return true;
-        } else if (id == R.id.action_royalchat_web) {
-            // Link web client / QR code sync
-            Toast.makeText(MainActivity.this, "Action Web", Toast.LENGTH_LONG).show();
-            return true;
-        } else if (id == R.id.action_started_message) {
-            // View starred / bookmarked messages
-            Toast.makeText(MainActivity.this, "Action Starred Message", Toast.LENGTH_LONG).show();
-            return true;
-        } else if (id == R.id.action_settings) {
-            // Navigate to user settings screen
-            startActivity(new Intent(MainActivity.this, SettingsActivity.class));
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    private void changeFabICon(final int index){
-        binding.fabAction.hide();
-
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                switch(index){
-                    case 0 : binding.fabAction.setImageDrawable(getDrawable(R.drawable.ic_baseline_chat_24));
-                                binding.fabAction.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        startActivity(new Intent(MainActivity.this, ContactsActivity.class));
-                                    }
-                                });
-
-                    break;
-                    case 1 : binding.fabAction.setImageDrawable(getDrawable(R.drawable.ic_baseline_camera_24));
-                    break;
-                    case 2 : binding.fabAction.setImageDrawable(getDrawable(R.drawable.ic_baseline_call_24)); break;
-                }
-                binding.fabAction.show();
+        public Fragment createFragment(int position) {
+            switch (position) {
+                case TAB_HOME:
+                    return new HomeFragment();
+                case TAB_CALLS:
+                    return new CallsFragment();
+                case TAB_CHATS:
+                    return new ChatsFragment();
+                case TAB_SETTINGS:
+                    return new SettingsFragment();
+                default:
+                    return new HomeFragment();
             }
-        },400);
+        }
+
+        @Override
+        public int getItemCount() {
+            return 4;
+        }
     }
 }

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Top-left highlight -->
+    <item android:top="0dp" android:left="0dp" android:right="0dp" android:bottom="4dp">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/neu_light_shadow" />
+            <corners android:topLeftRadius="28dp" android:topRightRadius="28dp" />
+        </shape>
+    </item>
+    <!-- Main bottom surface -->
+    <item android:top="1.5dp" android:left="0dp" android:right="0dp" android:bottom="0dp">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/neu_surface" />
+            <stroke android:width="1dp" android:color="#F8FAFC" />
+            <corners android:topLeftRadius="26dp" android:topRightRadius="26dp" />
+        </shape>
+    </item>
+</layer-list>

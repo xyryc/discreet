@@ -1,8 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#03A9F4</color>
-    <color name="colorPrimaryDark">#07405A</color>
-    <color name="colorAccent">#0A4F6E</color>
-    <color name="colorBlackTint">#333333</color>
+    <!-- Neumorphic Base Canvas & Surface (Soft Light Theme) -->
+    <color name="neu_background">#EBECF0</color>
+    <color name="neu_surface">#EBECF0</color>
+    <color name="neu_surface_variant">#E2E8F0</color>
 
+    <!-- Neumorphic Dual Shadows -->
+    <color name="neu_light_shadow">#FFFFFF</color>
+    <color name="neu_dark_shadow">#CBD5E1</color>
+    <color name="neu_dark_shadow_deep">#B8C5D6</color>
+    <color name="neu_inset_shadow">#D1D9E6</color>
+
+    <!-- Vibrant High-Contrast Accent (Electric Violet / Indigo) -->
+    <color name="neu_accent">#6366F1</color>
+    <color name="neu_accent_dark">#4F46E5</color>
+    <color name="neu_accent_light">#EEF2FF</color>
+    <color name="neu_accent_tint">#1A6366F1</color>
+
+    <!-- Theme Palettes (For Theme Switcher) -->
+    <color name="neu_theme_emerald">#10B981</color>
+    <color name="neu_theme_emerald_light">#ECFDF5</color>
+    <color name="neu_theme_cyan">#06B6D4</color>
+    <color name="neu_theme_rose">#F43F5E</color>
+    <color name="neu_theme_amber">#F59E0B</color>
+
+    <!-- Status & Functional Colors -->
+    <color name="neu_success">#10B981</color>
+    <color name="neu_success_light">#D1FAE5</color>
+    <color name="neu_danger">#EF4444</color>
+    <color name="neu_danger_dark">#DC2626</color>
+    <color name="neu_danger_light">#FEE2E2</color>
+
+    <!-- Typography Hierarchy -->
+    <color name="neu_text_primary">#0F172A</color>
+    <color name="neu_text_secondary">#64748B</color>
+    <color name="neu_text_muted">#94A3B8</color>
+    <color name="neu_text_on_accent">#FFFFFF</color>
+
+    <!-- Dividers & Outlines -->
+    <color name="neu_divider">#E2E8F0</color>
+    <color name="neu_border">#FFFFFF</color>
+    
+    <!-- Legacy compatibility aliases -->
+    <color name="colorPrimary">#6366F1</color>
+    <color name="colorPrimaryDark">#4F46E5</color>
+    <color name="colorAccent">#6366F1</color>
+    <color name="colorBlackTint">#0F172A</color>
 </resources>

@@ -1,50 +1,63 @@
-package com.example.chatapplication.view.settings;
-
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
+package com.example.chatapplication.menu;
 
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
 import com.example.chatapplication.R;
 import com.example.chatapplication.common.ThemeManager;
 import com.example.chatapplication.data.SessionManager;
-import com.example.chatapplication.databinding.ActivitySettingsBinding;
+import com.example.chatapplication.databinding.FragmentSettingsBinding;
 import com.example.chatapplication.view.profile.ProfileActivity;
 import com.example.chatapplication.view.startup.SplashScreenActivity;
 
-public class SettingsActivity extends AppCompatActivity {
+public class SettingsFragment extends Fragment {
 
-    private ActivitySettingsBinding binding;
+    private FragmentSettingsBinding binding;
     private SessionManager sessionManager;
     private ThemeManager themeManager;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_settings);
+    public SettingsFragment() {
+        // Required empty public constructor
+    }
 
-        sessionManager = SessionManager.getInstance(this);
-        themeManager = ThemeManager.getInstance(this);
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        binding = FragmentSettingsBinding.inflate(inflater, container, false);
+
+        if (getContext() != null) {
+            sessionManager = SessionManager.getInstance(getContext());
+            themeManager = ThemeManager.getInstance(getContext());
+        }
 
         loadUserInfo();
         setupThemeChips();
         initClickActions();
+
+        return binding.getRoot();
     }
 
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
         loadUserInfo();
     }
 
     private void loadUserInfo() {
+        if (sessionManager == null) return;
+
         String userName = sessionManager.getUserName();
         String userPhone = sessionManager.getUserPhone();
         String userBio = sessionManager.getUserBio();
@@ -56,8 +69,8 @@ public class SettingsActivity extends AppCompatActivity {
             binding.tvBio.setText(userBio);
         }
 
-        if (imageProfile != null && !imageProfile.isEmpty()) {
-            Glide.with(SettingsActivity.this)
+        if (imageProfile != null && !imageProfile.isEmpty() && getContext() != null) {
+            Glide.with(this)
                     .load(imageProfile)
                     .placeholder(R.drawable.icon_person)
                     .into(binding.imageProfile);
@@ -65,6 +78,7 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     private void setupThemeChips() {
+        if (themeManager == null) return;
         String currentTheme = themeManager.getCurrentTheme();
         updateThemeChipUI(currentTheme);
 
@@ -75,10 +89,11 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     private void selectTheme(String themeKey, String displayName) {
+        if (themeManager == null || getContext() == null) return;
         themeManager.setTheme(themeKey);
         updateThemeChipUI(themeKey);
         binding.tvActiveThemeName.setText(displayName);
-        Toast.makeText(this, displayName + " theme selected", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), displayName + " theme selected", Toast.LENGTH_SHORT).show();
     }
 
     private void updateThemeChipUI(String activeKey) {
@@ -103,6 +118,7 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     private void resetChip(TextView chip, String text) {
+        if (getContext() == null) return;
         chip.setBackgroundResource(R.drawable.bg_neu_chip_inactive);
         chip.setTextColor(getResources().getColor(R.color.neu_text_secondary));
         chip.setPadding(dpToPx(14), dpToPx(8), dpToPx(14), dpToPx(8));
@@ -110,6 +126,7 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     private void setActiveChip(TextView chip, String text) {
+        if (getContext() == null) return;
         chip.setBackgroundResource(R.drawable.bg_neu_chip_active);
         chip.setTextColor(getResources().getColor(R.color.neu_text_on_accent));
         chip.setPadding(dpToPx(14), dpToPx(8), dpToPx(14), dpToPx(8));
@@ -117,82 +134,78 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     private int dpToPx(int dp) {
+        if (getContext() == null) return dp;
         return (int) (dp * getResources().getDisplayMetrics().density);
     }
 
     private void initClickActions() {
-        // Back Button
-        binding.btnBack.setOnClickListener(v -> finish());
-
         // QR Code button
-        binding.btnQrCode.setOnClickListener(v -> 
-            Toast.makeText(SettingsActivity.this, "My Discreet QR Code • Share Profile", Toast.LENGTH_SHORT).show()
-        );
+        binding.btnQrCode.setOnClickListener(v -> {
+            if (getContext() != null) {
+                Toast.makeText(getContext(), "My Discreet QR Code • Share Profile", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         // Profile Hero Card -> Opens ProfileActivity
         binding.cardProfile.setOnClickListener(v -> 
-            startActivity(new Intent(SettingsActivity.this, ProfileActivity.class))
+            startActivity(new Intent(getContext(), ProfileActivity.class))
         );
 
         // Privacy & Security
-        binding.rowPrivacy.setOnClickListener(v -> 
-            Toast.makeText(SettingsActivity.this, "Privacy & Security Settings", Toast.LENGTH_SHORT).show()
-        );
+        binding.rowPrivacy.setOnClickListener(v -> {
+            if (getContext() != null) {
+                Toast.makeText(getContext(), "Privacy & Security Settings", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         // Two-Step Verification
-        binding.rowTwoStep.setOnClickListener(v -> 
-            Toast.makeText(SettingsActivity.this, "Two-Step Verification: Active", Toast.LENGTH_SHORT).show()
-        );
+        binding.rowTwoStep.setOnClickListener(v -> {
+            if (getContext() != null) {
+                Toast.makeText(getContext(), "Two-Step Verification: Active", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         // Chat Preferences
-        binding.rowChats.setOnClickListener(v -> 
-            Toast.makeText(SettingsActivity.this, "Chat Wallpapers & History Settings", Toast.LENGTH_SHORT).show()
-        );
+        binding.rowChats.setOnClickListener(v -> {
+            if (getContext() != null) {
+                Toast.makeText(getContext(), "Chat Wallpapers & History Settings", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         // Notifications Switch
         binding.switchNotifications.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            String status = isChecked ? "Notifications enabled" : "Notifications muted";
-            Toast.makeText(SettingsActivity.this, status, Toast.LENGTH_SHORT).show();
+            if (getContext() != null) {
+                String status = isChecked ? "Notifications enabled" : "Notifications muted";
+                Toast.makeText(getContext(), status, Toast.LENGTH_SHORT).show();
+            }
         });
-
-        // Data & Storage
-        binding.rowDataStorage.setOnClickListener(v -> 
-            Toast.makeText(SettingsActivity.this, "Storage: 12.4 MB Cache", Toast.LENGTH_SHORT).show()
-        );
-
-        // Invite Friends
-        binding.rowInvite.setOnClickListener(v -> {
-            Intent sendIntent = new Intent();
-            sendIntent.setAction(Intent.ACTION_SEND);
-            sendIntent.putExtra(Intent.EXTRA_TEXT, "Let's chat on Discreet! The privacy-first real-time messaging app.");
-            sendIntent.setType("text/plain");
-            startActivity(Intent.createChooser(sendIntent, "Invite via"));
-        });
-
-        // Help & Privacy Policy
-        binding.rowHelp.setOnClickListener(v -> 
-            Toast.makeText(SettingsActivity.this, "Discreet v1.0.0 (End-to-End Encrypted)", Toast.LENGTH_SHORT).show()
-        );
 
         // Logout Button
         binding.btnLogout.setOnClickListener(v -> showSignOutDialog());
     }
 
     private void showSignOutDialog() {
-        new AlertDialog.Builder(this)
+        if (getContext() == null) return;
+        new AlertDialog.Builder(getContext())
                 .setTitle("Log out")
                 .setMessage("Are you sure you want to log out from Discreet on this device?")
                 .setPositiveButton("Log out", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         sessionManager.logout();
-                        Intent intent = new Intent(SettingsActivity.this, SplashScreenActivity.class);
+                        Intent intent = new Intent(getContext(), SplashScreenActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent);
-                        finish();
+                        if (getActivity() != null) getActivity().finish();
                     }
                 })
                 .setNegativeButton("Cancel", null)
                 .show();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
 }

@@ -1,11 +1,18 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Theme.ChatApplication" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+    <!-- Base application theme with Material 3 -->
+    <style name="Theme.ChatApplication" parent="Theme.Material3.Light.NoActionBar">
+        <item name="android:statusBarColor">@color/neu_background</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
+        <item name="android:windowBackground">@color/neu_background</item>
+        <item name="android:navigationBarColor">@color/neu_background</item>
+        <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">true</item>
 
+        <!-- Material 3 Color Tokens -->
+        <item name="colorPrimary">@color/neu_accent</item>
+        <item name="colorPrimaryDark">@color/neu_accent_dark</item>
+        <item name="colorAccent">@color/neu_accent</item>
+        <item name="colorSurface">@color/neu_surface</item>
+        <item name="colorOnSurface">@color/neu_text_primary</item>
+        <item name="colorSurfaceVariant">@color/neu_surface_variant</item>
     </style>
 </resources>
