@@ -13,27 +13,44 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.chatapplication.R;
-import com.example.chatapplication.model.ChatList;
 import com.example.chatapplication.model.user.Users;
 import com.example.chatapplication.view.chats.ChatsActivity;
 
+import java.util.ArrayList;
 import java.util.List;
-
 
 public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.ViewHolder> {
     private List<Users> list;
-    private Context context;
+    private final List<Users> fullList;
+    private final Context context;
 
     public ContactsAdapter(List<Users> list, Context context) {
-        this.list = list;
+        this.list = new ArrayList<>(list);
+        this.fullList = new ArrayList<>(list);
         this.context = context;
+    }
+
+    public void filter(String query) {
+        list.clear();
+        if (query == null || query.trim().isEmpty()) {
+            list.addAll(fullList);
+        } else {
+            String lowerQuery = query.toLowerCase().trim();
+            for (Users user : fullList) {
+                if (user.getUserName() != null && user.getUserName().toLowerCase().contains(lowerQuery)) {
+                    list.add(user);
+                } else if (user.getBio() != null && user.getBio().toLowerCase().contains(lowerQuery)) {
+                    list.add(user);
+                }
+            }
+        }
+        notifyDataSetChanged();
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.layout_contact_item, parent, false);
-
         return new ViewHolder(view);
     }
 
@@ -42,19 +59,26 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.ViewHo
         final Users user = list.get(position);
 
         holder.username.setText(user.getUserName());
-        holder.desc.setText(user.getBio());
+        holder.desc.setText(user.getBio() != null && !user.getBio().isEmpty() ? user.getBio() : "Available on Discreet");
 
-        Glide.with(context).load(user.getImageProfile()).into(holder.imageProfile);
+        if (user.getImageProfile() != null && !user.getImageProfile().isEmpty()) {
+            Glide.with(context).load(user.getImageProfile()).into(holder.imageProfile);
+        } else {
+            holder.imageProfile.setImageResource(R.drawable.icon_person);
+        }
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                context.startActivity(new Intent(context, ChatsActivity.class)
-                        .putExtra("userID", user.getUserID())
-                        .putExtra("userName", user.getUserName())
-                        .putExtra("userProfile", user.getImageProfile()));
-            }
-        });
+        View.OnClickListener openChatListener = v -> {
+            Intent intent = new Intent(context, ChatsActivity.class);
+            intent.putExtra("userID", user.getUserID());
+            intent.putExtra("userName", user.getUserName());
+            intent.putExtra("userProfile", user.getImageProfile());
+            context.startActivity(intent);
+        };
+
+        holder.itemView.setOnClickListener(openChatListener);
+        if (holder.btnStartChat != null) {
+            holder.btnStartChat.setOnClickListener(openChatListener);
+        }
     }
 
     @Override
@@ -62,17 +86,17 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.ViewHo
         return list.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        private final ImageView imageProfile;
+        private final TextView username, desc;
+        private final View btnStartChat;
 
-        private ImageView imageProfile;
-        private TextView username, desc;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-
             imageProfile = itemView.findViewById(R.id.image_profile);
             username = itemView.findViewById(R.id.tv_username);
             desc = itemView.findViewById(R.id.tv_desc);
+            btnStartChat = itemView.findViewById(R.id.btn_start_chat);
         }
     }
 }
-

@@ -5,6 +5,10 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.View;
+import android.widget.Toast;
 
 import com.example.chatapplication.R;
 import com.example.chatapplication.adapter.ContactsAdapter;
@@ -27,8 +31,39 @@ public class ContactsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_contacts);
 
+        binding.btnBack.setOnClickListener(v -> finish());
+
+        binding.btnRefresh.setOnClickListener(v ->
+                Toast.makeText(this, "Refreshing encrypted contacts...", Toast.LENGTH_SHORT).show()
+        );
+
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        initSearch();
         getContactList();
+    }
+
+    private void initSearch() {
+        binding.edSearchContacts.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String query = s.toString();
+                if (adapter != null) {
+                    adapter.filter(query);
+                }
+                binding.btnClearSearch.setVisibility(query.isEmpty() ? View.GONE : View.VISIBLE);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {}
+        });
+
+        binding.btnClearSearch.setOnClickListener(v -> {
+            binding.edSearchContacts.setText("");
+        });
     }
 
     private void getContactList() {
@@ -41,6 +76,8 @@ public class ContactsActivity extends AppCompatActivity {
                 list.add(user);
             }
         }
+
+        binding.tvContactsCount.setText(list.size() + " contacts on Discreet");
 
         adapter = new ContactsAdapter(list, ContactsActivity.this);
         binding.recyclerView.setAdapter(adapter);

@@ -1,46 +1,156 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
     <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:orientation="vertical"
         android:layout_height="match_parent"
+        android:background="@color/neu_background"
+        android:orientation="vertical"
         tools:context=".view.contact.ContactsActivity">
 
-        <androidx.appcompat.widget.Toolbar
+        <!-- ========================================================= -->
+        <!-- 1. INTEGRATED NEUMORPHIC TOP APP BAR                      -->
+        <!-- ========================================================= -->
+        <RelativeLayout
+            android:id="@+id/contacts_header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimaryDark">
+            android:paddingHorizontal="16dp"
+            android:paddingTop="14dp"
+            android:paddingBottom="12dp">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/colorPrimaryDark"
-                android:orientation="horizontal">
-                <ImageButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+            <!-- Tactile Back Button -->
+            <FrameLayout
+                android:id="@+id/btn_back"
+                android:layout_width="42dp"
+                android:layout_height="42dp"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/bg_neu_button_selector"
+                android:clickable="true"
+                android:focusable="true">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center"
                     android:src="@drawable/ic_baseline_arrow_back_24"
-                    android:background="@android:color/transparent"
-                    app:tint="@android:color/white"/>
+                    app:tint="@color/neu_text_primary" />
+            </FrameLayout>
+
+            <!-- Header Title & Contact Count -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="14dp"
+                android:layout_toEndOf="@id/btn_back"
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Select Contact"
-                    android:textColor="@android:color/white"
-                    android:textSize="15sp"
-                    android:layout_marginStart="15dp"/>
+                    android:fontFamily="sans-serif-medium"
+                    android:text="New Conversation"
+                    android:textColor="@color/neu_text_primary"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
+                <TextView
+                    android:id="@+id/tv_contacts_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="1dp"
+                    android:text="Select a contact to chat"
+                    android:textColor="@color/neu_text_secondary"
+                    android:textSize="12sp" />
             </LinearLayout>
-        </androidx.appcompat.widget.Toolbar>
 
+            <!-- Refresh / QR Action Button -->
+            <FrameLayout
+                android:id="@+id/btn_refresh"
+                android:layout_width="42dp"
+                android:layout_height="42dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/bg_neu_button_selector"
+                android:clickable="true"
+                android:focusable="true">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_baseline_qr_code_24"
+                    app:tint="@color/neu_accent" />
+            </FrameLayout>
+        </RelativeLayout>
+
+
+        <!-- ========================================================= -->
+        <!-- 2. RECESSED SEARCH BAR                                    -->
+        <!-- ========================================================= -->
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/bg_neu_search_bar"
+            android:paddingHorizontal="14dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@android:drawable/ic_menu_search"
+                    app:tint="@color/neu_text_muted" />
+
+                <EditText
+                    android:id="@+id/ed_search_contacts"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="10dp"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:fontFamily="sans-serif"
+                    android:hint="Search contacts by name..."
+                    android:imeOptions="actionSearch"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:textColor="@color/neu_text_primary"
+                    android:textColorHint="@color/neu_text_muted"
+                    android:textSize="14sp" />
+
+                <ImageView
+                    android:id="@+id/btn_clear_search"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:src="@android:drawable/ic_menu_close_clear_cancel"
+                    android:visibility="gone"
+                    app:tint="@color/neu_text_muted" />
+            </LinearLayout>
+        </FrameLayout>
+
+
+        <!-- ========================================================= -->
+        <!-- 3. CONTACTS LIST                                          -->
+        <!-- ========================================================= -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:overScrollMode="never"
+            android:paddingTop="2dp"
+            android:paddingBottom="24dp" />
 
     </LinearLayout>
 </layout>

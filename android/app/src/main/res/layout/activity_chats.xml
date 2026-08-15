@@ -10,141 +10,133 @@
         tools:context=".view.chats.ChatsActivity">
 
         <!-- ========================================================= -->
-        <!-- 1. FLOATING NEUMORPHIC TOP APP BAR (NeumorphCardView)     -->
+        <!-- 1. INTEGRATED NEUMORPHIC TOP APP BAR                      -->
         <!-- ========================================================= -->
-        <com.example.chatapplication.common.view.NeumorphCardView
-            android:id="@+id/card_header"
+        <LinearLayout
+            android:id="@+id/chat_header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:layout_marginHorizontal="12dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="4dp"
-            app:neu_corner_radius="24dp"
-            app:neu_shadow_blur="9dp"
-            app:neu_shadow_distance="4.5dp">
+            android:background="@color/neu_background"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingHorizontal="16dp"
+            android:paddingTop="14dp"
+            android:paddingBottom="12dp">
 
+            <!-- Tactile Back Button -->
+            <FrameLayout
+                android:id="@+id/btn_back"
+                android:layout_width="42dp"
+                android:layout_height="42dp"
+                android:background="@drawable/bg_neu_button_selector"
+                android:clickable="true"
+                android:focusable="true">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_baseline_arrow_back_24"
+                    app:tint="@color/neu_text_primary" />
+            </FrameLayout>
+
+            <!-- User Avatar with Bezel Ring & Online Dot -->
+            <RelativeLayout
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:layout_marginStart="12dp">
+
+                <FrameLayout
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:background="@drawable/bg_neu_avatar_ring"
+                    android:padding="3dp">
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/image_profile"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/icon_person"
+                        app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Full" />
+                </FrameLayout>
+
+                <View
+                    android:id="@+id/view_online_dot"
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:background="@drawable/bg_neu_online_dot" />
+            </RelativeLayout>
+
+            <!-- User Info (Name + Presence Status) -->
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingHorizontal="12dp"
-                android:paddingVertical="10dp">
+                android:layout_marginStart="12dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
 
-                <!-- Tactile Back Button -->
-                <FrameLayout
-                    android:id="@+id/btn_back"
-                    android:layout_width="38dp"
-                    android:layout_height="38dp"
-                    android:background="@drawable/bg_neu_button_selector"
-                    android:clickable="true"
-                    android:focusable="true">
-
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_gravity="center"
-                        android:src="@drawable/ic_baseline_arrow_back_24"
-                        app:tint="@color/neu_text_primary" />
-                </FrameLayout>
-
-                <!-- User Avatar with Bezel Ring & Online Dot -->
-                <RelativeLayout
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_marginStart="10dp">
-
-                    <FrameLayout
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:background="@drawable/bg_neu_avatar_ring"
-                        android:padding="3dp">
-
-                        <com.google.android.material.imageview.ShapeableImageView
-                            android:id="@+id/image_profile"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:scaleType="centerCrop"
-                            android:src="@drawable/icon_person"
-                            app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Full" />
-                    </FrameLayout>
-
-                    <View
-                        android:id="@+id/view_online_dot"
-                        android:layout_width="11dp"
-                        android:layout_height="11dp"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentBottom="true"
-                        android:background="@drawable/bg_neu_online_dot" />
-                </RelativeLayout>
-
-                <!-- User Info (Name + Presence Status) -->
-                <LinearLayout
-                    android:layout_width="0dp"
+                <TextView
+                    android:id="@+id/tv_username"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
+                    android:ellipsize="end"
+                    android:fontFamily="sans-serif-medium"
+                    android:maxLines="1"
+                    android:text="Alex Morgan"
+                    android:textColor="@color/neu_text_primary"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
-                    <TextView
-                        android:id="@+id/tv_username"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:ellipsize="end"
-                        android:fontFamily="sans-serif-medium"
-                        android:maxLines="1"
-                        android:text="Alex Morgan"
-                        android:textColor="@color/neu_text_primary"
-                        android:textSize="15sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/tv_status"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Active now"
-                        android:textColor="@color/neu_success"
-                        android:textSize="11sp" />
-                </LinearLayout>
-
-                <!-- Audio Call Action Button -->
-                <FrameLayout
-                    android:id="@+id/btn_audio_call"
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:layout_marginEnd="6dp"
-                    android:background="@drawable/bg_neu_button_selector"
-                    android:clickable="true"
-                    android:focusable="true">
-
-                    <ImageView
-                        android:layout_width="16dp"
-                        android:layout_height="16dp"
-                        android:layout_gravity="center"
-                        android:src="@drawable/ic_baseline_call_24"
-                        app:tint="@color/neu_accent" />
-                </FrameLayout>
-
-                <!-- Video Call Action Button -->
-                <FrameLayout
-                    android:id="@+id/btn_video_call"
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:background="@drawable/bg_neu_button_selector"
-                    android:clickable="true"
-                    android:focusable="true">
-
-                    <ImageView
-                        android:layout_width="16dp"
-                        android:layout_height="16dp"
-                        android:layout_gravity="center"
-                        android:src="@drawable/ic_baseline_videocam_24"
-                        app:tint="@color/neu_accent" />
-                </FrameLayout>
-
+                <TextView
+                    android:id="@+id/tv_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="1dp"
+                    android:text="Active now"
+                    android:textColor="@color/neu_success"
+                    android:textSize="11sp" />
             </LinearLayout>
-        </com.example.chatapplication.common.view.NeumorphCardView>
+
+            <!-- Audio Call Action Button -->
+            <FrameLayout
+                android:id="@+id/btn_audio_call"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/bg_neu_button_selector"
+                android:clickable="true"
+                android:focusable="true">
+
+                <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_baseline_call_24"
+                    app:tint="@color/neu_accent" />
+            </FrameLayout>
+
+            <!-- Video Call Action Button -->
+            <FrameLayout
+                android:id="@+id/btn_video_call"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/bg_neu_button_selector"
+                android:clickable="true"
+                android:focusable="true">
+
+                <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_baseline_videocam_24"
+                    app:tint="@color/neu_accent" />
+            </FrameLayout>
+
+        </LinearLayout>
 
 
         <!-- ========================================================= -->
@@ -154,111 +146,101 @@
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@id/card_composer"
-            android:layout_below="@id/card_header"
+            android:layout_above="@id/ln_action"
+            android:layout_below="@id/chat_header"
             android:clipToPadding="false"
             android:overScrollMode="never"
             android:paddingHorizontal="4dp"
-            android:paddingTop="6dp"
-            android:paddingBottom="6dp" />
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp" />
 
 
         <!-- ========================================================= -->
-        <!-- 3. FLOATING MESSAGE COMPOSER DOCK (NeumorphCardView)      -->
+        <!-- 3. CLEAN NEUMORPHIC MESSAGE COMPOSER BAR                  -->
         <!-- ========================================================= -->
-        <com.example.chatapplication.common.view.NeumorphCardView
-            android:id="@+id/card_composer"
+        <LinearLayout
+            android:id="@+id/ln_action"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_marginHorizontal="12dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="8dp"
-            app:neu_corner_radius="26dp"
-            app:neu_shadow_blur="10dp"
-            app:neu_shadow_distance="5dp">
+            android:background="@color/neu_background"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingHorizontal="14dp"
+            android:paddingTop="6dp"
+            android:paddingBottom="14dp">
 
+            <!-- Attachment Button (Tactile Squircle) -->
+            <FrameLayout
+                android:id="@+id/btn_file"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/bg_neu_button_selector"
+                android:clickable="true"
+                android:focusable="true">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_baseline_attachment_24"
+                    app:tint="@color/neu_text_secondary" />
+            </FrameLayout>
+
+            <!-- Recessed Message Input Field Pill (48dp height) -->
             <LinearLayout
-                android:id="@+id/ln_action"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_neu_search_bar"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:paddingHorizontal="10dp"
-                android:paddingVertical="8dp">
+                android:paddingHorizontal="12dp">
 
-                <!-- Attachment Button -->
-                <FrameLayout
-                    android:id="@+id/btn_file"
-                    android:layout_width="38dp"
-                    android:layout_height="38dp"
-                    android:layout_marginEnd="6dp"
-                    android:background="@drawable/bg_neu_button_selector"
-                    android:clickable="true"
-                    android:focusable="true">
+                <ImageView
+                    android:id="@+id/btn_emoji"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:layout_marginEnd="8dp"
+                    android:src="@drawable/ic_baseline_insert_emoticon_24"
+                    app:tint="@color/neu_text_secondary" />
 
-                    <ImageView
-                        android:layout_width="18dp"
-                        android:layout_height="18dp"
-                        android:layout_gravity="center"
-                        android:src="@drawable/ic_baseline_attachment_24"
-                        app:tint="@color/neu_text_secondary" />
-                </FrameLayout>
-
-                <!-- Recessed Message Input Field Container -->
-                <LinearLayout
+                <EditText
+                    android:id="@+id/ed_message"
                     android:layout_width="0dp"
-                    android:layout_height="42dp"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="@drawable/bg_neu_search_bar"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:paddingHorizontal="10dp">
-
-                    <ImageView
-                        android:id="@+id/btn_emoji"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_marginEnd="8dp"
-                        android:src="@drawable/ic_baseline_insert_emoticon_24"
-                        app:tint="@color/neu_text_secondary" />
-
-                    <EditText
-                        android:id="@+id/ed_message"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:background="@android:color/transparent"
-                        android:fontFamily="sans-serif"
-                        android:hint="Type a secure message..."
-                        android:imeOptions="actionSend"
-                        android:inputType="textCapSentences|textMultiLine"
-                        android:maxLines="4"
-                        android:textColor="@color/neu_text_primary"
-                        android:textColorHint="@color/neu_text_muted"
-                        android:textSize="13sp" />
-                </LinearLayout>
-
-                <!-- Elevated Tactile Send Button -->
-                <FrameLayout
-                    android:id="@+id/btn_send"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_marginStart="8dp"
-                    android:background="@drawable/bg_neu_button_selector"
-                    android:clickable="true"
-                    android:focusable="true">
-
-                    <ImageView
-                        android:layout_width="18dp"
-                        android:layout_height="18dp"
-                        android:layout_gravity="center"
-                        android:src="@drawable/ic_baseline_send_24"
-                        app:tint="@color/neu_accent" />
-                </FrameLayout>
-
+                    android:background="@android:color/transparent"
+                    android:fontFamily="sans-serif"
+                    android:hint="Type a message..."
+                    android:imeOptions="actionSend"
+                    android:inputType="textCapSentences|textMultiLine"
+                    android:maxLines="4"
+                    android:textColor="@color/neu_text_primary"
+                    android:textColorHint="@color/neu_text_muted"
+                    android:textSize="14sp" />
             </LinearLayout>
-        </com.example.chatapplication.common.view.NeumorphCardView>
+
+            <!-- Elevated Tactile Send Button (46dp x 46dp) -->
+            <FrameLayout
+                android:id="@+id/btn_send"
+                android:layout_width="46dp"
+                android:layout_height="46dp"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/bg_neu_button_selector"
+                android:clickable="true"
+                android:focusable="true">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_baseline_send_24"
+                    app:tint="@color/neu_accent" />
+            </FrameLayout>
+
+        </LinearLayout>
 
     </RelativeLayout>
 </layout>
