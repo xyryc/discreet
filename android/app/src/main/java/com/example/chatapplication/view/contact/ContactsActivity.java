@@ -2,6 +2,7 @@ package com.example.chatapplication.view.contact;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.os.Bundle;
@@ -12,10 +13,9 @@ import android.widget.Toast;
 
 import com.example.chatapplication.R;
 import com.example.chatapplication.adapter.ContactsAdapter;
-import com.example.chatapplication.data.MockDataService;
-import com.example.chatapplication.data.SessionManager;
 import com.example.chatapplication.databinding.ActivityContactsBinding;
 import com.example.chatapplication.model.User;
+import com.example.chatapplication.viewmodel.ContactsViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +23,7 @@ import java.util.List;
 public class ContactsActivity extends AppCompatActivity {
 
     private ActivityContactsBinding binding;
+    private ContactsViewModel viewModel;
     private final List<User> list = new ArrayList<>();
     private ContactsAdapter adapter;
 
@@ -30,17 +31,21 @@ public class ContactsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_contacts);
+        viewModel = new ViewModelProvider(this).get(ContactsViewModel.class);
 
         binding.btnBack.setOnClickListener(v -> finish());
 
-        binding.btnRefresh.setOnClickListener(v ->
-                Toast.makeText(this, "Refreshing encrypted contacts...", Toast.LENGTH_SHORT).show()
-        );
+        binding.btnRefresh.setOnClickListener(v -> {
+            viewModel.refresh();
+            Toast.makeText(this, "Refreshing encrypted contacts...", Toast.LENGTH_SHORT).show();
+        });
 
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        adapter = new ContactsAdapter(list, ContactsActivity.this);
+        binding.recyclerView.setAdapter(adapter);
 
         initSearch();
-        getContactList();
+        observeContacts();
     }
 
     private void initSearch() {
@@ -66,20 +71,19 @@ public class ContactsActivity extends AppCompatActivity {
         });
     }
 
-    private void getContactList() {
-        String currentUserId = SessionManager.getInstance(this).getUserId();
-        List<User> allUsers = MockDataService.getInstance().getContacts();
-
-        list.clear();
-        for (User user : allUsers) {
-            if (user.getUserID() != null && !user.getUserID().equals(currentUserId)) {
-                list.add(user);
+    private void observeContacts() {
+        viewModel.getContacts().observe(this, allUsers -> {
+            if (allUsers != null) {
+                String currentUserId = viewModel.getCurrentUserId();
+                list.clear();
+                for (User user : allUsers) {
+                    if (user.getUserID() != null && !user.getUserID().equals(currentUserId)) {
+                        list.add(user);
+                    }
+                }
+                binding.tvContactsCount.setText(list.size() + " contacts on Discreet");
+                adapter.notifyDataSetChanged();
             }
-        }
-
-        binding.tvContactsCount.setText(list.size() + " contacts on Discreet");
-
-        adapter = new ContactsAdapter(list, ContactsActivity.this);
-        binding.recyclerView.setAdapter(adapter);
+        });
     }
 }

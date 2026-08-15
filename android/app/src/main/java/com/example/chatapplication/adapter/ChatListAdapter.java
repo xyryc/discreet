@@ -32,9 +32,13 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
 
     public void updateList(List<ChatItem> newList) {
         this.fullList.clear();
-        this.fullList.addAll(newList);
+        if (newList != null) {
+            this.fullList.addAll(newList);
+        }
         this.list.clear();
-        this.list.addAll(newList);
+        if (newList != null) {
+            this.list.addAll(newList);
+        }
         notifyDataSetChanged();
     }
 
@@ -66,29 +70,48 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ChatItem chat = list.get(position);
 
-        holder.tvUsername.setText(chat.getUserName());
-        holder.tvDesc.setText(chat.getDescription());
-        holder.tvDate.setText(chat.getDate());
+        if (holder.tvName != null) {
+            holder.tvName.setText(chat.getUserName());
+        }
+        if (holder.tvDesc != null) {
+            holder.tvDesc.setText(chat.getDescription());
+        }
+        if (holder.tvDate != null) {
+            holder.tvDate.setText(chat.getDate());
+        }
 
-        if (chat.getUrlProfile() != null && !chat.getUrlProfile().isEmpty()) {
-            Glide.with(context).load(chat.getUrlProfile()).into(holder.imageProfile);
-        } else {
-            holder.imageProfile.setImageResource(R.drawable.icon_person);
+        if (holder.imageProfile != null) {
+            if (chat.getUrlProfile() != null && !chat.getUrlProfile().isEmpty()) {
+                Glide.with(context).load(chat.getUrlProfile()).into(holder.imageProfile);
+            } else {
+                holder.imageProfile.setImageResource(R.drawable.icon_person);
+            }
         }
 
         // Unread badge logic
-        if (chat.getUnreadCount() > 0) {
-            holder.tvUnreadBadge.setVisibility(View.VISIBLE);
-            holder.tvUnreadBadge.setText(String.valueOf(chat.getUnreadCount()));
-            holder.tvDate.setTextColor(context.getResources().getColor(R.color.neu_accent));
-        } else {
-            holder.tvUnreadBadge.setVisibility(View.GONE);
-            holder.tvDate.setTextColor(context.getResources().getColor(R.color.neu_text_muted));
+        if (holder.tvUnreadBadge != null) {
+            if (chat.getUnreadCount() > 0) {
+                holder.tvUnreadBadge.setVisibility(View.VISIBLE);
+                holder.tvUnreadBadge.setText(String.valueOf(chat.getUnreadCount()));
+                if (holder.tvDate != null) {
+                    holder.tvDate.setTextColor(context.getResources().getColor(R.color.neu_accent));
+                }
+            } else {
+                holder.tvUnreadBadge.setVisibility(View.GONE);
+                if (holder.tvDate != null) {
+                    holder.tvDate.setTextColor(context.getResources().getColor(R.color.neu_text_muted));
+                }
+            }
         }
 
         // Online presence dot
-        if (holder.viewOnlineDot != null) {
-            holder.viewOnlineDot.setVisibility(chat.isOnline() ? View.VISIBLE : View.GONE);
+        if (holder.viewOnlineIndicator != null) {
+            holder.viewOnlineIndicator.setVisibility(chat.isOnline() ? View.VISIBLE : View.GONE);
+        }
+
+        // Read checkmark status icon
+        if (holder.iconReadStatus != null) {
+            holder.iconReadStatus.setVisibility(chat.getUnreadCount() > 0 ? View.GONE : View.VISIBLE);
         }
 
         holder.itemView.setOnClickListener(v -> {
@@ -106,18 +129,19 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        private final ImageView imageProfile;
-        private final TextView tvUsername, tvDesc, tvDate, tvUnreadBadge;
-        private final View viewOnlineDot;
+        private final ImageView imageProfile, iconReadStatus;
+        private final TextView tvName, tvDesc, tvDate, tvUnreadBadge;
+        private final View viewOnlineIndicator;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             imageProfile = itemView.findViewById(R.id.image_profile);
-            tvUsername = itemView.findViewById(R.id.tv_username);
+            iconReadStatus = itemView.findViewById(R.id.icon_read_status);
+            tvName = itemView.findViewById(R.id.tv_name);
             tvDesc = itemView.findViewById(R.id.tv_desc);
             tvDate = itemView.findViewById(R.id.tv_date);
             tvUnreadBadge = itemView.findViewById(R.id.tv_unread_badge);
-            viewOnlineDot = itemView.findViewById(R.id.view_online_dot);
+            viewOnlineIndicator = itemView.findViewById(R.id.view_online_indicator);
         }
     }
 }

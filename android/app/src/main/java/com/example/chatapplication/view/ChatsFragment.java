@@ -11,24 +11,25 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.chatapplication.adapter.ActiveContactsAdapter;
 import com.example.chatapplication.adapter.ChatListAdapter;
-import com.example.chatapplication.data.MockDataService;
 import com.example.chatapplication.databinding.FragmentChatsBinding;
 import com.example.chatapplication.model.ChatItem;
-import com.example.chatapplication.model.User;
 import com.example.chatapplication.view.contact.ContactsActivity;
+import com.example.chatapplication.viewmodel.ChatsViewModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ChatsFragment extends Fragment {
 
     private FragmentChatsBinding binding;
+    private ChatsViewModel viewModel;
     private ChatListAdapter chatListAdapter;
     private ActiveContactsAdapter activeContactsAdapter;
-    private MockDataService mockDataService;
 
     public ChatsFragment() {
         // Required empty public constructor
@@ -38,10 +39,10 @@ public class ChatsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragmentChatsBinding.inflate(inflater, container, false);
-        mockDataService = MockDataService.getInstance();
+        viewModel = new ViewModelProvider(this).get(ChatsViewModel.class);
 
-        setupChatsRecycler();
-        setupActiveContactsRecycler();
+        setupRecyclers();
+        observeViewModel();
         setupSearchFilter();
         initClickActions();
 
@@ -51,23 +52,40 @@ public class ChatsFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        refreshChats();
+        if (viewModel != null) {
+            viewModel.refresh();
+        }
     }
 
-    private void setupChatsRecycler() {
+    private void setupRecyclers() {
+        // Recent chats
         binding.recyclerViewChats.setLayoutManager(new LinearLayoutManager(getContext()));
-        List<ChatItem> chats = mockDataService.getRecentChats();
-        chatListAdapter = new ChatListAdapter(chats, getContext());
+        chatListAdapter = new ChatListAdapter(new ArrayList<>(), getContext());
         binding.recyclerViewChats.setAdapter(chatListAdapter);
 
-        updateUnreadHeader(chats);
+        // Active contacts tray
+        binding.recyclerViewStories.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        activeContactsAdapter = new ActiveContactsAdapter(new ArrayList<>(), getContext());
+        binding.recyclerViewStories.setAdapter(activeContactsAdapter);
     }
 
-    private void setupActiveContactsRecycler() {
-        binding.recyclerViewStories.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-        List<User> contacts = mockDataService.getContacts();
-        activeContactsAdapter = new ActiveContactsAdapter(contacts, getContext());
-        binding.recyclerViewStories.setAdapter(activeContactsAdapter);
+    private void observeViewModel() {
+        // Observe Recent Conversations
+        viewModel.getRecentChats().observe(getViewLifecycleOwner(), chats -> {
+            if (chats != null) {
+                chatListAdapter.updateList(chats);
+                updateUnreadHeader(chats);
+                binding.layoutEmptyState.setVisibility(chats.isEmpty() ? View.VISIBLE : View.GONE);
+            }
+        });
+
+        // Observe Active Online Contacts
+        viewModel.getActiveContacts().observe(getViewLifecycleOwner(), contacts -> {
+            if (contacts != null) {
+                activeContactsAdapter = new ActiveContactsAdapter(contacts, getContext());
+                binding.recyclerViewStories.setAdapter(activeContactsAdapter);
+            }
+        });
     }
 
     private void updateUnreadHeader(List<ChatItem> chats) {
@@ -109,14 +127,6 @@ public class ChatsFragment extends Fragment {
         binding.btnHeaderNewChat.setOnClickListener(v -> 
             startActivity(new Intent(getContext(), ContactsActivity.class))
         );
-    }
-
-    private void refreshChats() {
-        if (chatListAdapter != null) {
-            List<ChatItem> chats = mockDataService.getRecentChats();
-            chatListAdapter.updateList(chats);
-            updateUnreadHeader(chats);
-        }
     }
 
     @Override

@@ -20,7 +20,6 @@ import com.example.chatapplication.common.ThemeManager;
 import com.example.chatapplication.data.SessionManager;
 import com.example.chatapplication.databinding.FragmentSettingsBinding;
 import com.example.chatapplication.view.profile.ProfileActivity;
-import com.example.chatapplication.view.startup.SplashScreenActivity;
 
 public class SettingsFragment extends Fragment {
 
@@ -193,10 +192,8 @@ public class SettingsFragment extends Fragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         sessionManager.logout();
-                        Intent intent = new Intent(getContext(), SplashScreenActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        startActivity(intent);
-                        if (getActivity() != null) getActivity().finish();
+                        loadUserInfo();
+                        Toast.makeText(getContext(), "Logged out. Session reset.", Toast.LENGTH_SHORT).show();
                     }
                 })
                 .setNegativeButton("Cancel", null)

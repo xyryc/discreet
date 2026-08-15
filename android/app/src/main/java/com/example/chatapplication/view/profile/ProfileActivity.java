@@ -4,9 +4,9 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -22,18 +22,17 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.chatapplication.R;
-import com.example.chatapplication.common.Common;
-import com.example.chatapplication.data.SessionManager;
 import com.example.chatapplication.databinding.ActivityProfileBinding;
-import com.example.chatapplication.view.display.ViewImageActivity;
-import com.example.chatapplication.view.startup.SplashScreenActivity;
+import com.example.chatapplication.model.User;
+import com.example.chatapplication.viewmodel.ProfileViewModel;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 public class ProfileActivity extends AppCompatActivity {
 
     private ActivityProfileBinding binding;
-    private SessionManager sessionManager;
+    private ProfileViewModel viewModel;
     private BottomSheetDialog bottomSheetDialog, bsDialogEditName, bsDialogEditAbout;
+    private User currentUser;
 
     private static final int IMAGE_GALLERY_REQUEST = 111;
 
@@ -41,31 +40,35 @@ public class ProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_profile);
-
-        sessionManager = SessionManager.getInstance(this);
+        viewModel = new ViewModelProvider(this).get(ProfileViewModel.class);
 
         binding.btnBack.setOnClickListener(v -> finish());
         binding.btnQrCode.setOnClickListener(v ->
                 Toast.makeText(this, "Your Encrypted QR Code Card", Toast.LENGTH_SHORT).show()
         );
 
-        loadProfileData();
+        observeProfile();
         initActionClick();
     }
 
-    private void loadProfileData() {
-        binding.tvUsername.setText(sessionManager.getUserName());
-        binding.tvPhone.setText(sessionManager.getUserPhone());
-        binding.tvAbout.setText(sessionManager.getUserBio() != null && !sessionManager.getUserBio().isEmpty()
-                ? sessionManager.getUserBio()
-                : "Building something awesome 🚀");
+    private void observeProfile() {
+        viewModel.getCurrentUser().observe(this, user -> {
+            if (user != null) {
+                currentUser = user;
+                binding.tvUsername.setText(user.getUserName());
+                binding.tvPhone.setText(user.getUserPhone());
+                binding.tvAbout.setText(user.getBio() != null && !user.getBio().isEmpty()
+                        ? user.getBio()
+                        : "Building something awesome 🚀");
 
-        String imageProfile = sessionManager.getUserImage();
-        if (imageProfile != null && !imageProfile.isEmpty()) {
-            Glide.with(ProfileActivity.this).load(imageProfile).into(binding.imageProfile);
-        } else {
-            binding.imageProfile.setImageResource(R.drawable.icon_person);
-        }
+                String imageProfile = user.getImageProfile();
+                if (imageProfile != null && !imageProfile.isEmpty()) {
+                    Glide.with(ProfileActivity.this).load(imageProfile).into(binding.imageProfile);
+                } else {
+                    binding.imageProfile.setImageResource(R.drawable.icon_person);
+                }
+            }
+        });
     }
 
     private void initActionClick() {
@@ -75,16 +78,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         binding.InEditAbout.setOnClickListener(v -> showBottomSheetEditAbout());
 
-        binding.imageProfile.setOnClickListener(v -> {
-            Drawable dr = binding.imageProfile.getDrawable();
-            if (dr instanceof BitmapDrawable) {
-                Common.IMAGE_BITMAP = ((BitmapDrawable) dr).getBitmap();
-                ActivityOptionsCompat activityOptionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(
-                        ProfileActivity.this, binding.imageProfile, "image");
-                Intent intent = new Intent(ProfileActivity.this, ViewImageActivity.class);
-                startActivity(intent, activityOptionsCompat.toBundle());
-            }
-        });
+        binding.imageProfile.setOnClickListener(v -> showBottomSheetPickPhoto());
     }
 
     private void showBottomSheetPickPhoto() {
@@ -113,14 +107,19 @@ public class ProfileActivity extends AppCompatActivity {
         });
 
         EditText edUserName = view.findViewById(R.id.ed_username);
-        edUserName.setText(sessionManager.getUserName());
+        if (currentUser != null) {
+            edUserName.setText(currentUser.getUserName());
+        }
 
         view.findViewById(R.id.btn_save).setOnClickListener(v -> {
             String newName = edUserName.getText().toString().trim();
             if (TextUtils.isEmpty(newName)) {
                 Toast.makeText(getApplicationContext(), "Name can't be empty", Toast.LENGTH_SHORT).show();
             } else {
-                updateName(newName);
+                String bio = currentUser != null ? currentUser.getBio() : "";
+                String image = currentUser != null ? currentUser.getImageProfile() : "";
+                viewModel.updateProfile(newName, bio, image);
+                Toast.makeText(getApplicationContext(), "Name updated successfully", Toast.LENGTH_SHORT).show();
                 if (bsDialogEditName != null) bsDialogEditName.dismiss();
             }
         });
@@ -144,13 +143,16 @@ public class ProfileActivity extends AppCompatActivity {
 
         EditText edAbout = view.findViewById(R.id.ed_username);
         edAbout.setHint("About & Status");
-        edAbout.setText(sessionManager.getUserBio());
+        if (currentUser != null) {
+            edAbout.setText(currentUser.getBio());
+        }
 
         view.findViewById(R.id.btn_save).setOnClickListener(v -> {
             String newAbout = edAbout.getText().toString().trim();
             if (!TextUtils.isEmpty(newAbout)) {
-                sessionManager.updateUserProfile(sessionManager.getUserName(), newAbout, sessionManager.getUserImage());
-                binding.tvAbout.setText(newAbout);
+                String name = currentUser != null ? currentUser.getUserName() : "";
+                String image = currentUser != null ? currentUser.getImageProfile() : "";
+                viewModel.updateProfile(name, newAbout, image);
                 Toast.makeText(getApplicationContext(), "Status updated", Toast.LENGTH_SHORT).show();
                 if (bsDialogEditAbout != null) bsDialogEditAbout.dismiss();
             }
@@ -175,17 +177,13 @@ public class ProfileActivity extends AppCompatActivity {
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
                 binding.imageProfile.setImageBitmap(bitmap);
-                sessionManager.updateUserProfile(sessionManager.getUserName(), sessionManager.getUserBio(), imageUri.toString());
+                String name = currentUser != null ? currentUser.getUserName() : "";
+                String bio = currentUser != null ? currentUser.getBio() : "";
+                viewModel.updateProfile(name, bio, imageUri.toString());
                 Toast.makeText(this, "Profile picture updated", Toast.LENGTH_SHORT).show();
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
-    }
-
-    private void updateName(String newName) {
-        sessionManager.updateUserProfile(newName, sessionManager.getUserBio(), sessionManager.getUserImage());
-        binding.tvUsername.setText(newName);
-        Toast.makeText(getApplicationContext(), "Name updated successfully", Toast.LENGTH_SHORT).show();
     }
 }

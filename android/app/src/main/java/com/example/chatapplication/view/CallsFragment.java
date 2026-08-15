@@ -10,22 +10,22 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.chatapplication.R;
 import com.example.chatapplication.adapter.CallListAdapter;
-import com.example.chatapplication.data.MockDataService;
 import com.example.chatapplication.databinding.FragmentCallsBinding;
-import com.example.chatapplication.model.CallItem;
 import com.example.chatapplication.view.contact.ContactsActivity;
+import com.example.chatapplication.viewmodel.CallsViewModel;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public class CallsFragment extends Fragment {
 
     private FragmentCallsBinding binding;
+    private CallsViewModel viewModel;
     private CallListAdapter callListAdapter;
-    private MockDataService mockDataService;
     private boolean isMissedOnlyFilter = false;
 
     public CallsFragment() {
@@ -36,9 +36,10 @@ public class CallsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragmentCallsBinding.inflate(inflater, container, false);
-        mockDataService = MockDataService.getInstance();
+        viewModel = new ViewModelProvider(this).get(CallsViewModel.class);
 
         setupCallsRecycler();
+        observeViewModel();
         setupFilterChips();
         initClickActions();
 
@@ -48,14 +49,27 @@ public class CallsFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        refreshCalls();
+        if (viewModel != null) {
+            viewModel.refresh();
+        }
     }
 
     private void setupCallsRecycler() {
         binding.recyclerViewCalls.setLayoutManager(new LinearLayoutManager(getContext()));
-        List<CallItem> calls = mockDataService.getCallHistory();
-        callListAdapter = new CallListAdapter(calls, getContext());
+        callListAdapter = new CallListAdapter(new ArrayList<>(), getContext());
         binding.recyclerViewCalls.setAdapter(callListAdapter);
+    }
+
+    private void observeViewModel() {
+        viewModel.getCallHistory().observe(getViewLifecycleOwner(), calls -> {
+            if (calls != null) {
+                callListAdapter.updateList(calls);
+                if (isMissedOnlyFilter) {
+                    callListAdapter.filterMissedOnly(true);
+                }
+                binding.layoutEmptyState.setVisibility(callListAdapter.getItemCount() == 0 ? View.VISIBLE : View.GONE);
+            }
+        });
     }
 
     private void setupFilterChips() {
@@ -115,17 +129,6 @@ public class CallsFragment extends Fragment {
         binding.btnHeaderNewCall.setOnClickListener(v -> 
             startActivity(new Intent(getContext(), ContactsActivity.class))
         );
-    }
-
-    private void refreshCalls() {
-        if (callListAdapter != null) {
-            List<CallItem> calls = mockDataService.getCallHistory();
-            callListAdapter.updateList(calls);
-            if (isMissedOnlyFilter) {
-                callListAdapter.filterMissedOnly(true);
-            }
-            binding.layoutEmptyState.setVisibility(callListAdapter.getItemCount() == 0 ? View.VISIBLE : View.GONE);
-        }
     }
 
     @Override

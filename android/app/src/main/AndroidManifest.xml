@@ -22,22 +22,10 @@
             android:name=".view.contact.ContactsActivity"
             android:exported="false" />
         <activity
-            android:name=".view.display.ViewImageActivity"
-            android:exported="false" />
-        <activity
             android:name=".view.profile.ProfileActivity"
             android:exported="false" />
         <activity
-            android:name=".view.auth.SetUserInfoActivity"
-            android:exported="false" />
-        <activity
-            android:name=".view.auth.PhoneLoginActivity"
-            android:exported="false" />
-        <activity
-            android:name=".view.startup.WelcomeScreenActivity"
-            android:exported="false" />
-        <activity
-            android:name=".view.startup.SplashScreenActivity"
+            android:name=".view.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -45,9 +33,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".view.MainActivity"
-            android:exported="true" />
     </application>
 
 </manifest>

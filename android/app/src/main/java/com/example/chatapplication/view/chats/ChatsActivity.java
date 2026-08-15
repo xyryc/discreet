@@ -2,24 +2,21 @@ package com.example.chatapplication.view.chats;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.text.TextUtils;
-import android.view.View;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.chatapplication.R;
 import com.example.chatapplication.adapter.ChatsAdapter;
-import com.example.chatapplication.data.MockDataService;
-import com.example.chatapplication.data.SessionManager;
 import com.example.chatapplication.databinding.ActivityChatsBinding;
 import com.example.chatapplication.model.ChatMessage;
+import com.example.chatapplication.viewmodel.ConversationViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,18 +24,17 @@ import java.util.List;
 public class ChatsActivity extends AppCompatActivity {
 
     private ActivityChatsBinding binding;
+    private ConversationViewModel viewModel;
     private String receiverID;
     private String receiverName;
     private ChatsAdapter adapter;
-    private List<ChatMessage> list;
-    private String currentUserId;
+    private final List<ChatMessage> messageList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_chats);
-
-        currentUserId = SessionManager.getInstance(this).getUserId();
+        viewModel = new ViewModelProvider(this).get(ConversationViewModel.class);
 
         Intent intent = getIntent();
         receiverName = intent.getStringExtra("userName");
@@ -77,54 +73,40 @@ public class ChatsActivity extends AppCompatActivity {
                 Toast.makeText(this, "Emoji picker", Toast.LENGTH_SHORT).show()
         );
 
-        initBtnClick();
+        initRecycler();
+        initSendAction();
+        observeMessages();
+    }
 
-        list = new ArrayList<>();
+    private void initRecycler() {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
         layoutManager.setStackFromEnd(true);
         binding.recyclerView.setLayoutManager(layoutManager);
 
-        readChats();
+        adapter = new ChatsAdapter(messageList, this);
+        binding.recyclerView.setAdapter(adapter);
     }
 
-    private void initBtnClick() {
+    private void initSendAction() {
         binding.btnSend.setOnClickListener(v -> {
             String messageText = binding.edMessage.getText().toString().trim();
             if (!TextUtils.isEmpty(messageText)) {
-                sendTextMessage(messageText);
+                viewModel.sendMessage(receiverID, messageText);
                 binding.edMessage.setText("");
             }
         });
     }
 
-    private void sendTextMessage(String text) {
-        MockDataService.getInstance().sendMessage(currentUserId, receiverID, text);
-        readChats();
-
-        // Simulate intelligent live reply after 1.2 seconds for realistic interaction
-        new Handler(Looper.getMainLooper()).postDelayed(() -> {
-            if (!isFinishing() && !isDestroyed()) {
-                String reply = "Got your message: \"" + text + "\" 👍";
-                MockDataService.getInstance().sendMessage(receiverID, currentUserId, reply);
-                readChats();
+    private void observeMessages() {
+        viewModel.getMessages(receiverID).observe(this, messages -> {
+            if (messages != null) {
+                messageList.clear();
+                messageList.addAll(messages);
+                adapter.notifyDataSetChanged();
+                if (messageList.size() > 0) {
+                    binding.recyclerView.smoothScrollToPosition(messageList.size() - 1);
+                }
             }
-        }, 1200);
-    }
-
-    private void readChats() {
-        List<ChatMessage> messages = MockDataService.getInstance().getMessages(receiverID);
-        list.clear();
-        list.addAll(messages);
-
-        if (adapter != null) {
-            adapter.notifyDataSetChanged();
-        } else {
-            adapter = new ChatsAdapter(list, ChatsActivity.this);
-            binding.recyclerView.setAdapter(adapter);
-        }
-
-        if (list.size() > 0) {
-            binding.recyclerView.smoothScrollToPosition(list.size() - 1);
-        }
+        });
     }
 }
