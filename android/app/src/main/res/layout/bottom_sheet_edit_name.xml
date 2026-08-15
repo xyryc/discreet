@@ -1,46 +1,110 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="15dp"
-    android:orientation="vertical">
+    android:background="@color/neu_background"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <!-- Bottom Sheet Drag Handle -->
+    <View
+        android:layout_width="40dp"
+        android:layout_height="4dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/bg_neu_chip_inactive" />
+
+    <TextView
+        android:id="@+id/tv_dialog_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-medium"
+        android:text="Edit Display Name"
+        android:textColor="@color/neu_text_primary"
+        android:textSize="18sp"
+        android:textStyle="bold" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@android:color/black"
-        android:textSize="15sp"
-        android:textStyle="bold"
-        android:text="Enter your name"/>
-    <EditText
-        android:id="@+id/ed_username"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="16dp"
+        android:text="Enter the name visible to your encrypted contacts"
+        android:textColor="@color/neu_text_secondary"
+        android:textSize="12sp" />
+
+    <!-- Recessed Inset Text Input Field -->
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="40dp"
-        android:hint="Your name"/>
+        android:layout_height="52dp"
+        android:background="@drawable/bg_neu_search_bar"
+        android:paddingHorizontal="16dp">
+
+        <EditText
+            android:id="@+id/ed_username"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent"
+            android:fontFamily="sans-serif"
+            android:hint="Your display name"
+            android:imeOptions="actionDone"
+            android:inputType="textCapWords"
+            android:maxLines="1"
+            android:textColor="@color/neu_text_primary"
+            android:textColorHint="@color/neu_text_muted"
+            android:textSize="15sp" />
+    </FrameLayout>
+
+    <!-- Action Buttons -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="end"
         android:orientation="horizontal">
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"/>
-        <Button
+
+        <!-- Cancel Button -->
+        <FrameLayout
             android:id="@+id/btn_cancel"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/colorPrimary"
-            android:background="@android:color/transparent"
-            android:text="Cancel"/>
-        <Button
+            android:layout_height="44dp"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/bg_neu_button_selector"
+            android:clickable="true"
+            android:focusable="true"
+            android:paddingHorizontal="20dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="sans-serif-medium"
+                android:text="Cancel"
+                android:textColor="@color/neu_text_secondary"
+                android:textSize="14sp" />
+        </FrameLayout>
+
+        <!-- Save Button -->
+        <FrameLayout
             android:id="@+id/btn_save"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/colorPrimary"
-            android:background="@android:color/transparent"
-            android:text="Save"/>
+            android:layout_height="44dp"
+            android:background="@drawable/bg_neu_chip_active"
+            android:clickable="true"
+            android:focusable="true"
+            android:paddingHorizontal="24dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="sans-serif-medium"
+                android:text="Save Changes"
+                android:textColor="@color/neu_text_on_accent"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+        </FrameLayout>
     </LinearLayout>
+
 </LinearLayout>
