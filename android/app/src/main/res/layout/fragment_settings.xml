@@ -14,7 +14,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingHorizontal="20dp"
+            android:paddingHorizontal="16dp"
             android:paddingTop="20dp"
             android:paddingBottom="100dp">
 
@@ -24,7 +24,8 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp">
+                android:layout_marginHorizontal="6dp"
+                android:layout_marginBottom="16dp">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -72,115 +73,122 @@
 
 
             <!-- ========================================================= -->
-            <!-- 2. HERO PROFILE CARD (NEUMORPHIC RAISED)                  -->
+            <!-- 2. HERO PROFILE CARD (NEUMORPHCARDVIEW GAUSSIAN BLUR)     -->
             <!-- ========================================================= -->
-            <LinearLayout
+            <com.example.chatapplication.common.view.NeumorphCardView
                 android:id="@+id/card_profile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="24dp"
-                android:background="@drawable/bg_neu_card"
+                android:layout_marginBottom="12dp"
                 android:clickable="true"
                 android:focusable="true"
-                android:orientation="vertical"
-                android:padding="18dp">
+                app:neu_corner_radius="26dp"
+                app:neu_shadow_blur="10dp"
+                app:neu_shadow_distance="5dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
+                    android:orientation="vertical"
+                    android:padding="16dp">
 
-                    <!-- Avatar with Neumorphic Ring -->
-                    <FrameLayout
-                        android:layout_width="68dp"
-                        android:layout_height="68dp"
-                        android:background="@drawable/bg_neu_avatar_ring"
-                        android:padding="5dp">
-
-                        <com.google.android.material.imageview.ShapeableImageView
-                            android:id="@+id/image_profile"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:scaleType="centerCrop"
-                            android:src="@drawable/icon_person"
-                            app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Full" />
-                    </FrameLayout>
-
-                    <!-- User Information -->
                     <LinearLayout
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
 
-                        <TextView
-                            android:id="@+id/tv_username"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="sans-serif-medium"
-                            android:text="Alex Morgan"
-                            android:textColor="@color/neu_text_primary"
-                            android:textSize="18sp"
-                            android:textStyle="bold" />
+                        <!-- Avatar with Neumorphic Ring -->
+                        <FrameLayout
+                            android:layout_width="66dp"
+                            android:layout_height="66dp"
+                            android:background="@drawable/bg_neu_avatar_ring"
+                            android:padding="5dp">
 
-                        <TextView
-                            android:id="@+id/tv_phone"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="2dp"
-                            android:text="+1 (555) 019-2834"
-                            android:textColor="@color/neu_text_secondary"
-                            android:textSize="13sp" />
+                            <com.google.android.material.imageview.ShapeableImageView
+                                android:id="@+id/image_profile"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:scaleType="centerCrop"
+                                android:src="@drawable/icon_person"
+                                app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Full" />
+                        </FrameLayout>
 
-                        <TextView
-                            android:id="@+id/tv_bio"
-                            android:layout_width="wrap_content"
+                        <!-- User Information -->
+                        <LinearLayout
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="2dp"
-                            android:ellipsize="end"
-                            android:maxLines="1"
-                            android:text="Building something awesome 🚀"
-                            android:textColor="@color/neu_text_muted"
-                            android:textSize="12sp" />
+                            android:layout_marginStart="16dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/tv_username"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="sans-serif-medium"
+                                android:text="Alex Morgan"
+                                android:textColor="@color/neu_text_primary"
+                                android:textSize="18sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/tv_phone"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:text="+1 (555) 019-2834"
+                                android:textColor="@color/neu_text_secondary"
+                                android:textSize="13sp" />
+
+                            <TextView
+                                android:id="@+id/tv_bio"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:ellipsize="end"
+                                android:maxLines="1"
+                                android:text="Building something awesome 🚀"
+                                android:textColor="@color/neu_text_muted"
+                                android:textSize="12sp" />
+                        </LinearLayout>
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/ic_baseline_chevron_right_24"
+                            app:tint="@color/neu_text_muted" />
                     </LinearLayout>
 
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:src="@drawable/ic_baseline_chevron_right_24"
-                        app:tint="@color/neu_text_muted" />
-                </LinearLayout>
-
-                <!-- Security Status Pill -->
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="14dp"
-                    android:background="@drawable/bg_neu_chip_inactive"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:paddingHorizontal="12dp"
-                    android:paddingVertical="5dp">
-
-                    <ImageView
-                        android:layout_width="14dp"
-                        android:layout_height="14dp"
-                        android:src="@drawable/ic_baseline_security_24"
-                        app:tint="@color/neu_success" />
-
-                    <TextView
+                    <!-- Security Status Pill -->
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="6dp"
-                        android:fontFamily="sans-serif-medium"
-                        android:text="End-to-End Encrypted Account"
-                        android:textColor="@color/neu_success"
-                        android:textSize="11sp"
-                        android:textStyle="bold" />
+                        android:layout_marginTop="14dp"
+                        android:background="@drawable/bg_neu_chip_inactive"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingHorizontal="12dp"
+                        android:paddingVertical="5dp">
+
+                        <ImageView
+                            android:layout_width="14dp"
+                            android:layout_height="14dp"
+                            android:src="@drawable/ic_baseline_security_24"
+                            app:tint="@color/neu_success" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="6dp"
+                            android:fontFamily="sans-serif-medium"
+                            android:text="End-to-End Encrypted Account"
+                            android:textColor="@color/neu_success"
+                            android:textSize="11sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
                 </LinearLayout>
-            </LinearLayout>
+            </com.example.chatapplication.common.view.NeumorphCardView>
 
 
             <!-- ========================================================= -->
@@ -189,8 +197,9 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:layout_marginBottom="10dp"
+                android:layout_marginStart="6dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
                 android:fontFamily="sans-serif-medium"
                 android:letterSpacing="0.05"
                 android:text="APPEARANCE &amp; THEMES"
@@ -198,132 +207,139 @@
                 android:textSize="12sp"
                 android:textStyle="bold" />
 
-            <LinearLayout
+            <com.example.chatapplication.common.view.NeumorphCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="24dp"
-                android:background="@drawable/bg_neu_card"
-                android:orientation="vertical"
-                android:padding="16dp">
+                android:layout_marginBottom="12dp"
+                app:neu_corner_radius="26dp"
+                app:neu_shadow_blur="10dp"
+                app:neu_shadow_distance="5dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-
-                    <FrameLayout
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:background="@drawable/bg_neu_icon_tile">
-
-                        <ImageView
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:layout_gravity="center"
-                            android:src="@drawable/ic_baseline_palette_24"
-                            app:tint="@color/neu_accent" />
-                    </FrameLayout>
+                    android:orientation="vertical"
+                    android:padding="16dp">
 
                     <LinearLayout
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="14dp"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="sans-serif-medium"
-                            android:text="Active Palette"
-                            android:textColor="@color/neu_text_primary"
-                            android:textSize="15sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/tv_active_theme_name"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Soft Light Neumorphic"
-                            android:textColor="@color/neu_text_secondary"
-                            android:textSize="12sp" />
-                    </LinearLayout>
-                </LinearLayout>
-
-                <!-- Horizontal Theme Selector Chips -->
-                <HorizontalScrollView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="14dp"
-                    android:overScrollMode="never"
-                    android:scrollbars="none">
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
                         android:orientation="horizontal">
 
-                        <TextView
-                            android:id="@+id/chip_theme_light"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="8dp"
-                            android:background="@drawable/bg_neu_chip_active"
-                            android:clickable="true"
-                            android:focusable="true"
-                            android:fontFamily="sans-serif-medium"
-                            android:text="⚪ Soft Light"
-                            android:textColor="@color/neu_text_on_accent"
-                            android:textSize="12sp"
-                            android:textStyle="bold" />
+                        <FrameLayout
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:background="@drawable/bg_neu_icon_tile">
 
-                        <TextView
-                            android:id="@+id/chip_theme_emerald"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="8dp"
-                            android:background="@drawable/bg_neu_chip_inactive"
-                            android:clickable="true"
-                            android:focusable="true"
-                            android:fontFamily="sans-serif-medium"
-                            android:paddingHorizontal="14dp"
-                            android:paddingVertical="8dp"
-                            android:text="🟢 Emerald"
-                            android:textColor="@color/neu_text_secondary"
-                            android:textSize="12sp" />
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_gravity="center"
+                                android:src="@drawable/ic_baseline_palette_24"
+                                app:tint="@color/neu_accent" />
+                        </FrameLayout>
 
-                        <TextView
-                            android:id="@+id/chip_theme_royal"
-                            android:layout_width="wrap_content"
+                        <LinearLayout
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginEnd="8dp"
-                            android:background="@drawable/bg_neu_chip_inactive"
-                            android:clickable="true"
-                            android:focusable="true"
-                            android:fontFamily="sans-serif-medium"
-                            android:paddingHorizontal="14dp"
-                            android:paddingVertical="8dp"
-                            android:text="🟣 Royal"
-                            android:textColor="@color/neu_text_secondary"
-                            android:textSize="12sp" />
+                            android:layout_marginStart="14dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
 
-                        <TextView
-                            android:id="@+id/chip_theme_dark"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/bg_neu_chip_inactive"
-                            android:clickable="true"
-                            android:focusable="true"
-                            android:fontFamily="sans-serif-medium"
-                            android:paddingHorizontal="14dp"
-                            android:paddingVertical="8dp"
-                            android:text="⚫ Obsidian"
-                            android:textColor="@color/neu_text_secondary"
-                            android:textSize="12sp" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="sans-serif-medium"
+                                android:text="Active Palette"
+                                android:textColor="@color/neu_text_primary"
+                                android:textSize="15sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/tv_active_theme_name"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Soft Light Neumorphic"
+                                android:textColor="@color/neu_text_secondary"
+                                android:textSize="12sp" />
+                        </LinearLayout>
                     </LinearLayout>
-                </HorizontalScrollView>
-            </LinearLayout>
+
+                    <!-- Horizontal Theme Selector Chips -->
+                    <HorizontalScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="14dp"
+                        android:overScrollMode="never"
+                        android:scrollbars="none">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/chip_theme_light"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="8dp"
+                                android:background="@drawable/bg_neu_chip_active"
+                                android:clickable="true"
+                                android:focusable="true"
+                                android:fontFamily="sans-serif-medium"
+                                android:text="⚪ Soft Light"
+                                android:textColor="@color/neu_text_on_accent"
+                                android:textSize="12sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/chip_theme_emerald"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="8dp"
+                                android:background="@drawable/bg_neu_chip_inactive"
+                                android:clickable="true"
+                                android:focusable="true"
+                                android:fontFamily="sans-serif-medium"
+                                android:paddingHorizontal="14dp"
+                                android:paddingVertical="8dp"
+                                android:text="🟢 Emerald"
+                                android:textColor="@color/neu_text_secondary"
+                                android:textSize="12sp" />
+
+                            <TextView
+                                android:id="@+id/chip_theme_royal"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="8dp"
+                                android:background="@drawable/bg_neu_chip_inactive"
+                                android:clickable="true"
+                                android:focusable="true"
+                                android:fontFamily="sans-serif-medium"
+                                android:paddingHorizontal="14dp"
+                                android:paddingVertical="8dp"
+                                android:text="🟣 Royal"
+                                android:textColor="@color/neu_text_secondary"
+                                android:textSize="12sp" />
+
+                            <TextView
+                                android:id="@+id/chip_theme_dark"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/bg_neu_chip_inactive"
+                                android:clickable="true"
+                                android:focusable="true"
+                                android:fontFamily="sans-serif-medium"
+                                android:paddingHorizontal="14dp"
+                                android:paddingVertical="8dp"
+                                android:text="⚫ Obsidian"
+                                android:textColor="@color/neu_text_secondary"
+                                android:textSize="12sp" />
+                        </LinearLayout>
+                    </HorizontalScrollView>
+                </LinearLayout>
+            </com.example.chatapplication.common.view.NeumorphCardView>
 
 
             <!-- ========================================================= -->
@@ -332,8 +348,9 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:layout_marginBottom="10dp"
+                android:layout_marginStart="6dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
                 android:fontFamily="sans-serif-medium"
                 android:letterSpacing="0.05"
                 android:text="ACCOUNT &amp; PRIVACY"
@@ -341,138 +358,146 @@
                 android:textSize="12sp"
                 android:textStyle="bold" />
 
-            <LinearLayout
+            <com.example.chatapplication.common.view.NeumorphCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="24dp"
-                android:background="@drawable/bg_neu_card"
-                android:orientation="vertical"
-                android:padding="16dp">
+                android:layout_marginBottom="12dp"
+                app:neu_corner_radius="26dp"
+                app:neu_shadow_blur="10dp"
+                app:neu_shadow_distance="5dp">
 
-                <!-- Row 1: Privacy -->
                 <LinearLayout
-                    android:id="@+id/row_privacy"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:paddingVertical="8dp">
+                    android:orientation="vertical"
+                    android:padding="16dp">
 
-                    <FrameLayout
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:background="@drawable/bg_neu_icon_tile">
+                    <!-- Row 1: Privacy -->
+                    <LinearLayout
+                        android:id="@+id/row_privacy"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingVertical="8dp">
+
+                        <FrameLayout
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:background="@drawable/bg_neu_icon_tile">
+
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_gravity="center"
+                                android:src="@drawable/ic_baseline_security_24"
+                                app:tint="@color/neu_accent" />
+                        </FrameLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="14dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="sans-serif-medium"
+                                android:text="Privacy &amp; Security"
+                                android:textColor="@color/neu_text_primary"
+                                android:textSize="15sp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Last seen, Passcode lock, Blocked"
+                                android:textColor="@color/neu_text_secondary"
+                                android:textSize="12sp" />
+                        </LinearLayout>
 
                         <ImageView
                             android:layout_width="20dp"
                             android:layout_height="20dp"
-                            android:layout_gravity="center"
-                            android:src="@drawable/ic_baseline_security_24"
-                            app:tint="@color/neu_accent" />
-                    </FrameLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="14dp"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="sans-serif-medium"
-                            android:text="Privacy &amp; Security"
-                            android:textColor="@color/neu_text_primary"
-                            android:textSize="15sp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Last seen, Passcode lock, Blocked"
-                            android:textColor="@color/neu_text_secondary"
-                            android:textSize="12sp" />
+                            android:src="@drawable/ic_baseline_chevron_right_24"
+                            app:tint="@color/neu_text_muted" />
                     </LinearLayout>
 
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:src="@drawable/ic_baseline_chevron_right_24"
-                        app:tint="@color/neu_text_muted" />
-                </LinearLayout>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginVertical="6dp"
+                        android:background="@color/neu_divider" />
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginVertical="6dp"
-                    android:background="@color/neu_divider" />
+                    <!-- Row 2: Two-Step Verification -->
+                    <LinearLayout
+                        android:id="@+id/row_two_step"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingVertical="8dp">
 
-                <!-- Row 2: Two-Step Verification -->
-                <LinearLayout
-                    android:id="@+id/row_two_step"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:paddingVertical="8dp">
+                        <FrameLayout
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:background="@drawable/bg_neu_icon_tile">
 
-                    <FrameLayout
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:background="@drawable/bg_neu_icon_tile">
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_gravity="center"
+                                android:src="@drawable/ic_baseline_vpn_key_24"
+                                app:tint="@color/neu_accent" />
+                        </FrameLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="14dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="sans-serif-medium"
+                                android:text="Two-Step Verification"
+                                android:textColor="@color/neu_text_primary"
+                                android:textSize="15sp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Enabled • Extra security layer"
+                                android:textColor="@color/neu_text_secondary"
+                                android:textSize="12sp" />
+                        </LinearLayout>
 
                         <ImageView
                             android:layout_width="20dp"
                             android:layout_height="20dp"
-                            android:layout_gravity="center"
-                            android:src="@drawable/ic_baseline_vpn_key_24"
-                            app:tint="@color/neu_accent" />
-                    </FrameLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="14dp"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="sans-serif-medium"
-                            android:text="Two-Step Verification"
-                            android:textColor="@color/neu_text_primary"
-                            android:textSize="15sp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Enabled • Extra security layer"
-                            android:textColor="@color/neu_text_secondary"
-                            android:textSize="12sp" />
+                            android:src="@drawable/ic_baseline_chevron_right_24"
+                            app:tint="@color/neu_text_muted" />
                     </LinearLayout>
-
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:src="@drawable/ic_baseline_chevron_right_24"
-                        app:tint="@color/neu_text_muted" />
                 </LinearLayout>
-            </LinearLayout>
+            </com.example.chatapplication.common.view.NeumorphCardView>
 
 
             <!-- ========================================================= -->
-            <!-- 5. SECTION: CHATS & MEDIA                                 -->
+            <!-- 5. SECTION: CHATS & NOTIFICATIONS                         -->
             <!-- ========================================================= -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:layout_marginBottom="10dp"
+                android:layout_marginStart="6dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
                 android:fontFamily="sans-serif-medium"
                 android:letterSpacing="0.05"
                 android:text="CHATS &amp; NOTIFICATIONS"
@@ -480,128 +505,135 @@
                 android:textSize="12sp"
                 android:textStyle="bold" />
 
-            <LinearLayout
+            <com.example.chatapplication.common.view.NeumorphCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="24dp"
-                android:background="@drawable/bg_neu_card"
-                android:orientation="vertical"
-                android:padding="16dp">
+                android:layout_marginBottom="16dp"
+                app:neu_corner_radius="26dp"
+                app:neu_shadow_blur="10dp"
+                app:neu_shadow_distance="5dp">
 
-                <!-- Row 1: Chat Wallpaper -->
                 <LinearLayout
-                    android:id="@+id/row_chats"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:paddingVertical="8dp">
+                    android:orientation="vertical"
+                    android:padding="16dp">
 
-                    <FrameLayout
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:background="@drawable/bg_neu_icon_tile">
+                    <!-- Row 1: Chat Wallpaper -->
+                    <LinearLayout
+                        android:id="@+id/row_chats"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingVertical="8dp">
+
+                        <FrameLayout
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:background="@drawable/bg_neu_icon_tile">
+
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_gravity="center"
+                                android:src="@drawable/ic_baseline_chat_24"
+                                app:tint="@color/neu_accent" />
+                        </FrameLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="14dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="sans-serif-medium"
+                                android:text="Chat Preferences"
+                                android:textColor="@color/neu_text_primary"
+                                android:textSize="15sp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Wallpapers, Font size, Auto-archive"
+                                android:textColor="@color/neu_text_secondary"
+                                android:textSize="12sp" />
+                        </LinearLayout>
 
                         <ImageView
                             android:layout_width="20dp"
                             android:layout_height="20dp"
-                            android:layout_gravity="center"
-                            android:src="@drawable/ic_baseline_chat_24"
-                            app:tint="@color/neu_accent" />
-                    </FrameLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="14dp"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="sans-serif-medium"
-                            android:text="Chat Preferences"
-                            android:textColor="@color/neu_text_primary"
-                            android:textSize="15sp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Wallpapers, Font size, Auto-archive"
-                            android:textColor="@color/neu_text_secondary"
-                            android:textSize="12sp" />
+                            android:src="@drawable/ic_baseline_chevron_right_24"
+                            app:tint="@color/neu_text_muted" />
                     </LinearLayout>
 
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:src="@drawable/ic_baseline_chevron_right_24"
-                        app:tint="@color/neu_text_muted" />
-                </LinearLayout>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginVertical="6dp"
+                        android:background="@color/neu_divider" />
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginVertical="6dp"
-                    android:background="@color/neu_divider" />
-
-                <!-- Row 2: Notifications -->
-                <LinearLayout
-                    android:id="@+id/row_notifications"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:paddingVertical="8dp">
-
-                    <FrameLayout
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:background="@drawable/bg_neu_icon_tile">
-
-                        <ImageView
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:layout_gravity="center"
-                            android:src="@drawable/ic_baseline_notifications_24"
-                            app:tint="@color/neu_accent" />
-                    </FrameLayout>
-
+                    <!-- Row 2: Notifications -->
                     <LinearLayout
-                        android:layout_width="0dp"
+                        android:id="@+id/row_notifications"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="14dp"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingVertical="8dp">
 
-                        <TextView
+                        <FrameLayout
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:background="@drawable/bg_neu_icon_tile">
+
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_gravity="center"
+                                android:src="@drawable/ic_baseline_notifications_24"
+                                app:tint="@color/neu_accent" />
+                        </FrameLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="14dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="sans-serif-medium"
+                                android:text="Notifications &amp; Sounds"
+                                android:textColor="@color/neu_text_primary"
+                                android:textSize="15sp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Message alerts, Vibration, Tones"
+                                android:textColor="@color/neu_text_secondary"
+                                android:textSize="12sp" />
+                        </LinearLayout>
+
+                        <androidx.appcompat.widget.SwitchCompat
+                            android:id="@+id/switch_notifications"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="sans-serif-medium"
-                            android:text="Notifications &amp; Sounds"
-                            android:textColor="@color/neu_text_primary"
-                            android:textSize="15sp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Message alerts, Vibration, Tones"
-                            android:textColor="@color/neu_text_secondary"
-                            android:textSize="12sp" />
+                            android:checked="true" />
                     </LinearLayout>
-
-                    <androidx.appcompat.widget.SwitchCompat
-                        android:id="@+id/switch_notifications"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:checked="true" />
                 </LinearLayout>
-            </LinearLayout>
+            </com.example.chatapplication.common.view.NeumorphCardView>
 
 
             <!-- ========================================================= -->

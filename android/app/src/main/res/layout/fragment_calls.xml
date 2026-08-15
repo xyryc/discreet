@@ -29,7 +29,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="20dp"
-                    android:layout_marginBottom="20dp">
+                    android:layout_marginBottom="16dp">
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -77,65 +77,72 @@
 
 
                 <!-- ========================================================= -->
-                <!-- 2. CREATE CALL LINK HERO CARD                             -->
+                <!-- 2. CREATE CALL LINK HERO CARD (NeumorphCardView)          -->
                 <!-- ========================================================= -->
-                <LinearLayout
+                <com.example.chatapplication.common.view.NeumorphCardView
                     android:id="@+id/card_create_call_link"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="16dp"
-                    android:layout_marginBottom="20dp"
-                    android:background="@drawable/bg_neu_card"
+                    android:layout_marginHorizontal="14dp"
+                    android:layout_marginBottom="12dp"
                     android:clickable="true"
                     android:focusable="true"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:padding="16dp">
-
-                    <FrameLayout
-                        android:layout_width="46dp"
-                        android:layout_height="46dp"
-                        android:background="@drawable/bg_neu_icon_tile">
-
-                        <ImageView
-                            android:layout_width="22dp"
-                            android:layout_height="22dp"
-                            android:layout_gravity="center"
-                            android:src="@drawable/ic_baseline_link_24"
-                            app:tint="@color/neu_accent" />
-                    </FrameLayout>
+                    app:neu_corner_radius="24dp"
+                    app:neu_shadow_blur="9dp"
+                    app:neu_shadow_distance="4.5dp">
 
                     <LinearLayout
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="14dp"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="16dp">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="sans-serif-medium"
-                            android:text="Create a Discreet Call Link"
-                            android:textColor="@color/neu_text_primary"
-                            android:textSize="15sp"
-                            android:textStyle="bold" />
+                        <FrameLayout
+                            android:layout_width="46dp"
+                            android:layout_height="46dp"
+                            android:background="@drawable/bg_neu_icon_tile">
 
-                        <TextView
-                            android:layout_width="wrap_content"
+                            <ImageView
+                                android:layout_width="22dp"
+                                android:layout_height="22dp"
+                                android:layout_gravity="center"
+                                android:src="@drawable/ic_baseline_link_24"
+                                app:tint="@color/neu_accent" />
+                        </FrameLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="2dp"
-                            android:text="Share a link for an encrypted voice/video room"
-                            android:textColor="@color/neu_text_secondary"
-                            android:textSize="12sp" />
+                            android:layout_marginStart="14dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="sans-serif-medium"
+                                android:text="Create a Discreet Call Link"
+                                android:textColor="@color/neu_text_primary"
+                                android:textSize="15sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:text="Share a link for an encrypted voice/video room"
+                                android:textColor="@color/neu_text_secondary"
+                                android:textSize="12sp" />
+                        </LinearLayout>
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/ic_baseline_chevron_right_24"
+                            app:tint="@color/neu_text_muted" />
                     </LinearLayout>
-
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:src="@drawable/ic_baseline_chevron_right_24"
-                        app:tint="@color/neu_text_muted" />
-                </LinearLayout>
+                </com.example.chatapplication.common.view.NeumorphCardView>
 
 
                 <!-- ========================================================= -->
@@ -145,7 +152,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="20dp"
-                    android:layout_marginBottom="16dp"
+                    android:layout_marginBottom="14dp"
                     android:orientation="horizontal">
 
                     <!-- Chip 1: All Calls -->
@@ -186,8 +193,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="24dp"
-                    android:layout_marginBottom="12dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginBottom="8dp"
                     android:fontFamily="sans-serif-medium"
                     android:letterSpacing="0.05"
                     android:text="RECENT CALLS"

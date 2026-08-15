@@ -4,115 +4,123 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingHorizontal="16dp"
-    android:paddingBottom="12dp">
+    android:paddingHorizontal="14dp"
+    android:paddingBottom="4dp">
 
-    <!-- Neumorphic Soft Card -->
-    <LinearLayout
+    <!-- Neumorphic Soft Gaussian Blur Card -->
+    <com.example.chatapplication.common.view.NeumorphCardView
         android:id="@+id/call_item_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/bg_neu_chat_row"
         android:clickable="true"
         android:focusable="true"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:padding="14dp">
+        app:neu_corner_radius="22dp"
+        app:neu_shadow_blur="8dp"
+        app:neu_shadow_distance="4dp">
 
-        <!-- Avatar Container with Neumorphic Ring -->
-        <FrameLayout
-            android:layout_width="54dp"
-            android:layout_height="54dp"
-            android:background="@drawable/bg_neu_avatar_ring"
-            android:padding="4dp">
-
-            <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/image_profile"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="centerCrop"
-                android:src="@drawable/icon_person"
-                app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Full" />
-        </FrameLayout>
-
-        <!-- Call Details Column -->
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="14dp"
-            android:layout_weight="1"
-            android:orientation="vertical">
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingHorizontal="14dp"
+            android:paddingVertical="12dp">
 
-            <!-- Name and Verification -->
-            <TextView
-                android:id="@+id/tv_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:fontFamily="sans-serif-medium"
-                android:maxLines="1"
-                android:text="Alex Morgan"
-                android:textColor="@color/neu_text_primary"
-                android:textSize="15sp"
-                android:textStyle="bold" />
+            <!-- Avatar Container with Neumorphic Ring -->
+            <FrameLayout
+                android:layout_width="52dp"
+                android:layout_height="52dp"
+                android:background="@drawable/bg_neu_avatar_ring"
+                android:padding="4dp">
 
-            <!-- Call Direction + Duration Row -->
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/image_profile"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/icon_person"
+                    app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Full" />
+            </FrameLayout>
+
+            <!-- Call Details Column -->
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:layout_marginStart="14dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
 
-                <!-- Direction Arrow -->
-                <ImageView
-                    android:id="@+id/img_call_direction"
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:src="@drawable/ic_baseline_call_received_24"
-                    app:tint="@color/neu_success" />
-
-                <!-- Video / Audio indicator icon -->
-                <ImageView
-                    android:id="@+id/img_call_media_type"
-                    android:layout_width="14dp"
-                    android:layout_height="14dp"
-                    android:layout_marginStart="6dp"
-                    android:src="@drawable/ic_baseline_call_24"
-                    app:tint="@color/neu_text_secondary" />
-
-                <!-- Date & Duration -->
+                <!-- Name and Verification -->
                 <TextView
-                    android:id="@+id/tv_call_info"
+                    android:id="@+id/tv_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="6dp"
                     android:ellipsize="end"
+                    android:fontFamily="sans-serif-medium"
                     android:maxLines="1"
-                    android:text="Today, 10:15 AM • 12m 45s"
-                    android:textColor="@color/neu_text_secondary"
-                    android:textSize="12sp" />
+                    android:text="Alex Morgan"
+                    android:textColor="@color/neu_text_primary"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <!-- Call Direction + Duration Row -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <!-- Direction Arrow -->
+                    <ImageView
+                        android:id="@+id/img_call_direction"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:src="@drawable/ic_baseline_call_received_24"
+                        app:tint="@color/neu_success" />
+
+                    <!-- Video / Audio indicator icon -->
+                    <ImageView
+                        android:id="@+id/img_call_media_type"
+                        android:layout_width="14dp"
+                        android:layout_height="14dp"
+                        android:layout_marginStart="6dp"
+                        android:src="@drawable/ic_baseline_call_24"
+                        app:tint="@color/neu_text_secondary" />
+
+                    <!-- Date & Duration -->
+                    <TextView
+                        android:id="@+id/tv_call_info"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="6dp"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="Today, 10:15 AM • 12m 45s"
+                        android:textColor="@color/neu_text_secondary"
+                        android:textSize="12sp" />
+                </LinearLayout>
             </LinearLayout>
+
+            <!-- Redial / Action Button (Neumorphic Squircle) -->
+            <FrameLayout
+                android:id="@+id/btn_call_action"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/bg_neu_button_selector"
+                android:clickable="true"
+                android:focusable="true">
+
+                <ImageView
+                    android:id="@+id/icon_action_call"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_baseline_call_24"
+                    app:tint="@color/neu_accent" />
+            </FrameLayout>
+
         </LinearLayout>
-
-        <!-- Redial / Action Button (Neumorphic Squircle) -->
-        <FrameLayout
-            android:id="@+id/btn_call_action"
-            android:layout_width="42dp"
-            android:layout_height="42dp"
-            android:layout_marginStart="8dp"
-            android:background="@drawable/bg_neu_button_selector"
-            android:clickable="true"
-            android:focusable="true">
-
-            <ImageView
-                android:id="@+id/icon_action_call"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_gravity="center"
-                android:src="@drawable/ic_baseline_call_24"
-                app:tint="@color/neu_accent" />
-        </FrameLayout>
-
-    </LinearLayout>
+    </com.example.chatapplication.common.view.NeumorphCardView>
 </FrameLayout>

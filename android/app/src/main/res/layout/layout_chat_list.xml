@@ -4,146 +4,154 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingHorizontal="16dp"
-    android:paddingBottom="12dp">
+    android:paddingHorizontal="14dp"
+    android:paddingBottom="4dp">
 
-    <!-- Neumorphic Soft Card -->
-    <LinearLayout
+    <!-- Neumorphic Soft Gaussian Blur Card -->
+    <com.example.chatapplication.common.view.NeumorphCardView
         android:id="@+id/chat_item_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/bg_neu_chat_row"
         android:clickable="true"
         android:focusable="true"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:padding="14dp">
+        app:neu_corner_radius="22dp"
+        app:neu_shadow_blur="8dp"
+        app:neu_shadow_distance="4dp">
 
-        <!-- Avatar Container with Neumorphic Ring + Online Dot -->
-        <RelativeLayout
-            android:layout_width="56dp"
-            android:layout_height="56dp">
-
-            <FrameLayout
-                android:layout_width="56dp"
-                android:layout_height="56dp"
-                android:background="@drawable/bg_neu_avatar_ring"
-                android:padding="4dp">
-
-                <com.google.android.material.imageview.ShapeableImageView
-                    android:id="@+id/image_profile"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/icon_person"
-                    app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Full" />
-            </FrameLayout>
-
-            <!-- Online Indicator Dot -->
-            <View
-                android:id="@+id/view_online_indicator"
-                android:layout_width="14dp"
-                android:layout_height="14dp"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentBottom="true"
-                android:background="@drawable/bg_neu_online_dot"
-                android:visibility="visible" />
-        </RelativeLayout>
-
-        <!-- Message Details Column -->
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="14dp"
-            android:layout_weight="1"
-            android:orientation="vertical">
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingHorizontal="14dp"
+            android:paddingVertical="12dp">
 
-            <!-- Name and Verification Row -->
+            <!-- Avatar Container with Neumorphic Ring + Online Dot -->
+            <RelativeLayout
+                android:layout_width="54dp"
+                android:layout_height="54dp">
+
+                <FrameLayout
+                    android:layout_width="54dp"
+                    android:layout_height="54dp"
+                    android:background="@drawable/bg_neu_avatar_ring"
+                    android:padding="4dp">
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/image_profile"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/icon_person"
+                        app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Full" />
+                </FrameLayout>
+
+                <!-- Online Indicator Dot -->
+                <View
+                    android:id="@+id/view_online_indicator"
+                    android:layout_width="14dp"
+                    android:layout_height="14dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:background="@drawable/bg_neu_online_dot"
+                    android:visibility="visible" />
+            </RelativeLayout>
+
+            <!-- Message Details Column -->
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:layout_marginStart="14dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/tv_name"
+                <!-- Name and Verification Row -->
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:ellipsize="end"
-                    android:fontFamily="sans-serif-medium"
-                    android:maxLines="1"
-                    android:text="Alex Morgan"
-                    android:textColor="@color/neu_text_primary"
-                    android:textSize="15sp"
-                    android:textStyle="bold" />
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
 
-                <ImageView
-                    android:layout_width="13dp"
-                    android:layout_height="13dp"
-                    android:layout_marginStart="4dp"
-                    android:src="@drawable/ic_baseline_security_24"
-                    app:tint="@color/neu_accent" />
-            </LinearLayout>
+                    <TextView
+                        android:id="@+id/tv_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:fontFamily="sans-serif-medium"
+                        android:maxLines="1"
+                        android:text="Alex Morgan"
+                        android:textColor="@color/neu_text_primary"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
 
-            <!-- Message Preview Row with Checkmark -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
+                    <ImageView
+                        android:layout_width="13dp"
+                        android:layout_height="13dp"
+                        android:layout_marginStart="4dp"
+                        android:src="@drawable/ic_baseline_security_24"
+                        app:tint="@color/neu_accent" />
+                </LinearLayout>
 
-                <ImageView
-                    android:id="@+id/icon_read_status"
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
-                    android:layout_marginEnd="4dp"
-                    android:src="@drawable/ic_baseline_done_all_24"
-                    app:tint="@color/neu_accent" />
-
-                <TextView
-                    android:id="@+id/tv_desc"
+                <!-- Message Preview Row with Checkmark -->
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:ellipsize="end"
-                    android:maxLines="1"
-                    android:text="Are we meeting today for the design review?"
-                    android:textColor="@color/neu_text_secondary"
-                    android:textSize="13sp" />
+                    android:layout_marginTop="4dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/icon_read_status"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_marginEnd="4dp"
+                        android:src="@drawable/ic_baseline_done_all_24"
+                        app:tint="@color/neu_accent" />
+
+                    <TextView
+                        android:id="@+id/tv_desc"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="Are we meeting today for the design review?"
+                        android:textColor="@color/neu_text_secondary"
+                        android:textSize="13sp" />
+                </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
 
-        <!-- Trailing Time and Unread Badge Column -->
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:gravity="end|center_vertical"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/tv_date"
+            <!-- Trailing Time and Unread Badge Column -->
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-medium"
-                android:text="10:30 AM"
-                android:textColor="@color/neu_text_muted"
-                android:textSize="11sp" />
+                android:layout_marginStart="8dp"
+                android:gravity="end|center_vertical"
+                android:orientation="vertical">
 
-            <!-- Unread Count Pill Badge -->
-            <TextView
-                android:id="@+id/tv_unread_badge"
-                android:layout_width="22dp"
-                android:layout_height="22dp"
-                android:layout_marginTop="6dp"
-                android:background="@drawable/bg_neu_unread_badge"
-                android:gravity="center"
-                android:text="2"
-                android:textColor="@color/neu_text_on_accent"
-                android:textSize="10sp"
-                android:textStyle="bold"
-                android:visibility="visible" />
+                <TextView
+                    android:id="@+id/tv_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="10:30 AM"
+                    android:textColor="@color/neu_text_muted"
+                    android:textSize="11sp" />
+
+                <!-- Unread Count Pill Badge -->
+                <TextView
+                    android:id="@+id/tv_unread_badge"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:layout_marginTop="6dp"
+                    android:background="@drawable/bg_neu_unread_badge"
+                    android:gravity="center"
+                    android:text="2"
+                    android:textColor="@color/neu_text_on_accent"
+                    android:textSize="10sp"
+                    android:textStyle="bold"
+                    android:visibility="visible" />
+            </LinearLayout>
+
         </LinearLayout>
-
-    </LinearLayout>
+    </com.example.chatapplication.common.view.NeumorphCardView>
 </FrameLayout>
