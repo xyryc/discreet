@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Neumorphic Base Canvas & Surface (Soft Light Theme) -->
-    <color name="neu_background">#EBECF0</color>
-    <color name="neu_surface">#EBECF0</color>
-    <color name="neu_surface_variant">#E2E8F0</color>
+    <!-- Bright Clean Porcelain Neumorphic Base (Closer to white, airy & premium) -->
+    <color name="neu_background">#F1F4F9</color>
+    <color name="neu_surface">#F1F4F9</color>
+    <color name="neu_surface_variant">#E8EDF5</color>
 
-    <!-- Neumorphic Dual Shadows -->
+    <!-- Crisp Neumorphic Dual Shadows -->
     <color name="neu_light_shadow">#FFFFFF</color>
-    <color name="neu_dark_shadow">#CBD5E1</color>
-    <color name="neu_dark_shadow_deep">#B8C5D6</color>
-    <color name="neu_inset_shadow">#D1D9E6</color>
+    <color name="neu_dark_shadow">#D6DFEB</color>
+    <color name="neu_dark_shadow_deep">#C7D3E3</color>
+    <color name="neu_inset_shadow">#DDE4F0</color>
 
     <!-- Vibrant High-Contrast Accent (Electric Violet / Indigo) -->
     <color name="neu_accent">#6366F1</color>
@@ -31,14 +31,14 @@
     <color name="neu_danger_dark">#DC2626</color>
     <color name="neu_danger_light">#FEE2E2</color>
 
-    <!-- Typography Hierarchy -->
+    <!-- High-Contrast Clean Typography -->
     <color name="neu_text_primary">#0F172A</color>
     <color name="neu_text_secondary">#64748B</color>
     <color name="neu_text_muted">#94A3B8</color>
     <color name="neu_text_on_accent">#FFFFFF</color>
 
     <!-- Dividers & Outlines -->
-    <color name="neu_divider">#E2E8F0</color>
+    <color name="neu_divider">#E6ECF4</color>
     <color name="neu_border">#FFFFFF</color>
     
     <!-- Legacy compatibility aliases -->
