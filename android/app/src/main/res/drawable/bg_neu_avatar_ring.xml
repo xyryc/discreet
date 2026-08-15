@@ -1,22 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <!-- Bottom-right soft shadow -->
-    <item android:top="3dp" android:left="3dp" android:right="0dp" android:bottom="0dp">
+    <!-- Outer ambient spread shadow -->
+    <item android:top="5dp" android:left="5dp" android:right="0dp" android:bottom="0dp">
         <shape android:shape="oval">
-            <solid android:color="@color/neu_dark_shadow" />
+            <solid android:color="@color/neu_shadow_diffuse_outer" />
         </shape>
     </item>
+
+    <!-- Core intense shadow -->
+    <item android:top="3dp" android:left="3dp" android:right="1dp" android:bottom="1dp">
+        <shape android:shape="oval">
+            <solid android:color="@color/neu_shadow_diffuse_inner" />
+        </shape>
+    </item>
+
     <!-- Top-left highlight -->
-    <item android:top="0dp" android:left="0dp" android:right="3dp" android:bottom="3dp">
+    <item android:top="0dp" android:left="0dp" android:right="4dp" android:bottom="4dp">
         <shape android:shape="oval">
             <solid android:color="@color/neu_light_shadow" />
         </shape>
     </item>
+
     <!-- Outer bezel ring -->
-    <item android:top="2dp" android:left="2dp" android:right="2dp" android:bottom="2dp">
+    <item android:top="2.5dp" android:left="2.5dp" android:right="2.5dp" android:bottom="2.5dp">
         <shape android:shape="oval">
             <solid android:color="@color/neu_surface" />
-            <stroke android:width="2dp" android:color="#FFFFFF" />
+            <stroke android:width="1.5dp" android:color="#FFFFFF" />
         </shape>
     </item>
 </layer-list>

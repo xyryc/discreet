@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Bright Clean Porcelain Neumorphic Base (Closer to white, airy & premium) -->
+    <!-- Bright Clean Porcelain Neumorphic Base -->
     <color name="neu_background">#F1F4F9</color>
     <color name="neu_surface">#F1F4F9</color>
     <color name="neu_surface_variant">#E8EDF5</color>
 
-    <!-- Crisp Neumorphic Dual Shadows -->
+    <!-- Ultra-Soft, Wide-Spread Diffuse Ambient Shadows -->
     <color name="neu_light_shadow">#FFFFFF</color>
-    <color name="neu_dark_shadow">#D6DFEB</color>
-    <color name="neu_dark_shadow_deep">#C7D3E3</color>
+    <color name="neu_dark_shadow">#D0DBEB</color>
+    <color name="neu_shadow_diffuse_inner">#D9E3F0</color>
+    <color name="neu_shadow_diffuse_mid">#E3ECF5</color>
+    <color name="neu_shadow_diffuse_outer">#ECF2F8</color>
+    <color name="neu_shadow_diffuse_farthest">#F4F7FB</color>
     <color name="neu_inset_shadow">#DDE4F0</color>
 
     <!-- Vibrant High-Contrast Accent (Electric Violet / Indigo) -->
