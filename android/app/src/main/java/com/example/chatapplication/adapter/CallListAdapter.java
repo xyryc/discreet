@@ -69,7 +69,7 @@ public class CallListAdapter extends RecyclerView.Adapter<CallListAdapter.ViewHo
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.layout_call_list, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_call, parent, false);
         return new ViewHolder(view);
     }
 
