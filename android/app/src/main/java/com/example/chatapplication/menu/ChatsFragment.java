@@ -13,8 +13,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.example.chatapplication.adapter.ActiveContactsAdapter;
 import com.example.chatapplication.adapter.ChatListAdapter;
-import com.example.chatapplication.adapter.StoriesAdapter;
 import com.example.chatapplication.data.MockDataService;
 import com.example.chatapplication.databinding.FragmentChatsBinding;
 import com.example.chatapplication.model.ChatList;
@@ -27,7 +27,7 @@ public class ChatsFragment extends Fragment {
 
     private FragmentChatsBinding binding;
     private ChatListAdapter chatListAdapter;
-    private StoriesAdapter storiesAdapter;
+    private ActiveContactsAdapter activeContactsAdapter;
     private MockDataService mockDataService;
 
     public ChatsFragment() {
@@ -41,7 +41,7 @@ public class ChatsFragment extends Fragment {
         mockDataService = MockDataService.getInstance();
 
         setupChatsRecycler();
-        setupStoriesRecycler();
+        setupActiveContactsRecycler();
         setupSearchFilter();
         initClickActions();
 
@@ -63,11 +63,11 @@ public class ChatsFragment extends Fragment {
         updateUnreadHeader(chats);
     }
 
-    private void setupStoriesRecycler() {
+    private void setupActiveContactsRecycler() {
         binding.recyclerViewStories.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         List<Users> contacts = mockDataService.getContacts();
-        storiesAdapter = new StoriesAdapter(contacts, getContext());
-        binding.recyclerViewStories.setAdapter(storiesAdapter);
+        activeContactsAdapter = new ActiveContactsAdapter(contacts, getContext());
+        binding.recyclerViewStories.setAdapter(activeContactsAdapter);
     }
 
     private void updateUnreadHeader(List<ChatList> chats) {
