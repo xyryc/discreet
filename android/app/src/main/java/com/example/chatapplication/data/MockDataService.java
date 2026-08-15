@@ -49,34 +49,53 @@ public class MockDataService {
                 "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150", 
                 "", "michael@example.com", "15/03/1985", "Male", "Online", "World's Best Boss"));
 
-        // Mock Recent Chat List
-        mockChatLists.add(new ChatList("user_1", "Alex Morgan", "Are we meeting today?", "10:30 AM", 
-                "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150"));
-        
-        mockChatLists.add(new ChatList("user_2", "David Kim", "The backend is ready!", "Yesterday", 
-                "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150"));
+        mockUsers.add(new Users("user_5", "Elena Rostova", "+1 (555) 017-3819", 
+                "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150", 
+                "", "elena@example.com", "19/07/1999", "Female", "Online", "Security researcher"));
 
-        mockChatLists.add(new ChatList("user_3", "Sarah Connor", "See you soon.", "12/08/2026", 
-                "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150"));
+        // Mock Recent Chat List with rich details
+        mockChatLists.add(new ChatList("user_1", "Alex Morgan", "Are we meeting today for the design review?", "10:30 AM", 
+                "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150", 2, true, false));
+        
+        mockChatLists.add(new ChatList("user_2", "David Kim", "The Spring Boot WebSocket backend is ready!", "Yesterday", 
+                "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150", 0, true, true));
+
+        mockChatLists.add(new ChatList("user_5", "Elena Rostova", "Verified the end-to-end key exchange protocol 🔒", "Yesterday", 
+                "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150", 1, true, false));
+
+        mockChatLists.add(new ChatList("user_3", "Sarah Connor", "See you at the office tomorrow.", "12/08/2026", 
+                "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150", 0, false, true));
+
+        mockChatLists.add(new ChatList("user_4", "Michael Scott", "That's what she said! 😂", "10/08/2026", 
+                "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150", 0, false, true));
 
         // Mock Call List
         mockCallLists.add(new CallList("user_1", "Alex Morgan", "Today, 10:15 AM", 
                 "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150", "INCOMING"));
         mockCallLists.add(new CallList("user_2", "David Kim", "Yesterday, 6:45 PM", 
                 "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150", "OUTGOING"));
+        mockCallLists.add(new CallList("user_5", "Elena Rostova", "Aug 12, 2:30 PM", 
+                "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150", "MISSED"));
 
         // Mock Message Thread for user_1
         List<Chats> user1Messages = new ArrayList<>();
         user1Messages.add(new Chats("10:15 AM", "Hey! How is the Discreet app coming along?", "TEXT", "user_1", "user_me"));
-        user1Messages.add(new Chats("10:16 AM", "It is going great! Removed Firebase and building custom UI.", "TEXT", "user_me", "user_1"));
-        user1Messages.add(new Chats("10:17 AM", "Are we meeting today?", "TEXT", "user_1", "user_me"));
+        user1Messages.add(new Chats("10:16 AM", "It is going great! Removed Firebase and building custom Neumorphic UI.", "TEXT", "user_me", "user_1"));
+        user1Messages.add(new Chats("10:28 AM", "The soft UI cards look amazing on phone.", "TEXT", "user_1", "user_me"));
+        user1Messages.add(new Chats("10:30 AM", "Are we meeting today for the design review?", "TEXT", "user_1", "user_me"));
         mockConversationMap.put("user_1", user1Messages);
 
         // Mock Message Thread for user_2
         List<Chats> user2Messages = new ArrayList<>();
         user2Messages.add(new Chats("Yesterday, 4:00 PM", "Spring Boot architecture looks super clean.", "TEXT", "user_2", "user_me"));
-        user2Messages.add(new Chats("Yesterday, 4:02 PM", "The backend is ready!", "TEXT", "user_2", "user_me"));
+        user2Messages.add(new Chats("Yesterday, 4:02 PM", "The Spring Boot WebSocket backend is ready!", "TEXT", "user_2", "user_me"));
         mockConversationMap.put("user_2", user2Messages);
+
+        // Mock Message Thread for user_5
+        List<Chats> user5Messages = new ArrayList<>();
+        user5Messages.add(new Chats("Yesterday, 8:10 PM", "Testing the zero-knowledge session storage.", "TEXT", "user_5", "user_me"));
+        user5Messages.add(new Chats("Yesterday, 8:12 PM", "Verified the end-to-end key exchange protocol 🔒", "TEXT", "user_5", "user_me"));
+        mockConversationMap.put("user_5", user5Messages);
     }
 
     public List<Users> getContacts() {
