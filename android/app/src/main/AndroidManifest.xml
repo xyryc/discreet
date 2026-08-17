@@ -28,6 +28,9 @@
             android:name=".view.OnboardingActivity"
             android:exported="false" />
         <activity
+            android:name=".view.AuthActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.MainActivity"
             android:exported="true">
             <intent-filter>

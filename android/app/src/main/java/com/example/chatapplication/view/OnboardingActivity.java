@@ -108,16 +108,22 @@ public class OnboardingActivity extends AppCompatActivity {
     }
 
     private void setupClickActions() {
-        binding.btnSkip.setOnClickListener(v -> showPersonaDialog());
+        binding.btnSkip.setOnClickListener(v -> openAuthScreen());
 
         binding.btnNext.setOnClickListener(v -> {
             int current = binding.viewPagerOnboarding.getCurrentItem();
             if (current < slides.size() - 1) {
                 binding.viewPagerOnboarding.setCurrentItem(current + 1, true);
             } else {
-                showPersonaDialog();
+                openAuthScreen();
             }
         });
+    }
+
+    private void openAuthScreen() {
+        Intent intent = new Intent(OnboardingActivity.this, AuthActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     private void showPersonaDialog() {
