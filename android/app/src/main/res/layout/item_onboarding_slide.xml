@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:paddingHorizontal="24dp">
+
+    <!-- Neumorphic Hero Card for Slide Content -->
+    <com.example.chatapplication.common.view.NeumorphCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:neu_corner_radius="32dp"
+        app:neu_shadow_blur="12dp"
+        app:neu_shadow_distance="6dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingHorizontal="24dp"
+            android:paddingVertical="36dp">
+
+            <!-- Floating Squircle Icon Bezel -->
+            <FrameLayout
+                android:layout_width="96dp"
+                android:layout_height="96dp"
+                android:background="@drawable/bg_neu_icon_tile">
+
+                <ImageView
+                    android:id="@+id/img_slide_icon"
+                    android:layout_width="52dp"
+                    android:layout_height="52dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_discreet_logo" />
+            </FrameLayout>
+
+            <!-- Feature Tag Badge -->
+            <TextView
+                android:id="@+id/tv_slide_badge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:background="@drawable/bg_neu_chip_active"
+                android:fontFamily="sans-serif-medium"
+                android:letterSpacing="0.08"
+                android:paddingHorizontal="14dp"
+                android:paddingVertical="6dp"
+                android:text="ZERO-KNOWLEDGE"
+                android:textColor="@color/neu_text_on_accent"
+                android:textSize="11sp"
+                android:textStyle="bold" />
+
+            <!-- Main Headline -->
+            <TextView
+                android:id="@+id/tv_slide_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="sans-serif-medium"
+                android:gravity="center"
+                android:text="Quantum-Grade Privacy"
+                android:textColor="@color/neu_text_primary"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+
+            <!-- Description Copy -->
+            <TextView
+                android:id="@+id/tv_slide_subtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="sans-serif"
+                android:gravity="center"
+                android:lineSpacingExtra="4dp"
+                android:text="End-to-end encrypted messaging with zero metadata tracking and self-healing session keys."
+                android:textColor="@color/neu_text_secondary"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+    </com.example.chatapplication.common.view.NeumorphCardView>
+
+</LinearLayout>

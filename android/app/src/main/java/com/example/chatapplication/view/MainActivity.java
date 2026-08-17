@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.widget.ImageView;
@@ -16,11 +17,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.chatapplication.R;
+import com.example.chatapplication.data.SessionManager;
 import com.example.chatapplication.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
+    private SessionManager sessionManager;
     private static final int TAB_HOME = 0;
     private static final int TAB_CALLS = 1;
     private static final int TAB_CHATS = 2;
@@ -29,6 +32,14 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        sessionManager = SessionManager.getInstance(this);
+        if (!sessionManager.isLoggedIn()) {
+            startActivity(new Intent(this, OnboardingActivity.class));
+            finish();
+            return;
+        }
+
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
         setupViewPager();

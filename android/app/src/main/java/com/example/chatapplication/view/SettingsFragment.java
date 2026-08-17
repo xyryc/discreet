@@ -192,8 +192,13 @@ public class SettingsFragment extends Fragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         sessionManager.logout();
-                        loadUserInfo();
-                        Toast.makeText(getContext(), "Logged out. Session reset.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "Logged out from Discreet.", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(getContext(), OnboardingActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
+                        if (getActivity() != null) {
+                            getActivity().finish();
+                        }
                     }
                 })
                 .setNegativeButton("Cancel", null)
