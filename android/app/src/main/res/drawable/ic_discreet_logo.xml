@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="64dp"
+    android:height="64dp"
+    android:viewportWidth="64"
+    android:viewportHeight="64">
+
+    <!-- Privacy Shield with Electric Violet Gradient -->
+    <path
+        android:pathData="M32,8 L54,17 C54,40 44,54 32,60 C20,54 10,40 10,17 Z">
+        <aapt:attr name="android:fillColor">
+            <gradient
+                android:startX="10"
+                android:startY="8"
+                android:endX="54"
+                android:endY="60"
+                android:type="linear">
+                <item android:offset="0.0" android:color="#7C3AED" />
+                <item android:offset="0.5" android:color="#6366F1" />
+                <item android:offset="1.0" android:color="#4F46E5" />
+            </gradient>
+        </aapt:attr>
+    </path>
+
+    <!-- Inner Shield Accent Stroke -->
+    <path
+        android:pathData="M32,12 L50,19.5 C50,38 42,49.5 32,54.5 C22,49.5 14,38 14,19.5 Z"
+        android:strokeWidth="1"
+        android:strokeColor="#50FFFFFF"
+        android:fillColor="#00000000" />
+
+    <!-- Central Chat Bubble -->
+    <path
+        android:pathData="M32,22 C26.5,22 22,26.2 22,31.2 C22,34.2 23.6,36.8 26,38.4 L24.5,42.5 L29.2,40.2 C30.1,40.4 31,40.5 32,40.5 C37.5,40.5 42,36.3 42,31.2 C42,26.2 37.5,22 32,22 Z"
+        android:fillColor="#FFFFFF" />
+
+    <!-- Keyhole / Encryption Lock -->
+    <path
+        android:pathData="M32,28 C30.6,28 29.5,29.1 29.5,30.5 C29.5,31.4 30,32.2 30.8,32.7 L30.2,35.5 L33.8,35.5 L33.2,32.7 C34,32.2 34.5,31.4 34.5,30.5 C34.5,29.1 33.4,28 32,28 Z"
+        android:fillColor="#6366F1" />
+
+</vector>
