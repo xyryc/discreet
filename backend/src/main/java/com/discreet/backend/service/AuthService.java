@@ -2,6 +2,7 @@ package com.discreet.backend.service;
 
 import java.util.UUID;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.discreet.backend.dto.AuthResponse;
@@ -13,10 +14,12 @@ import com.discreet.backend.repository.UserRepository;
 @Service
 public class AuthService {
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    // inject UserRepository
-    public AuthService(UserRepository userRepository) {
+    // inject UserRepository and password encoder
+    public AuthService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public AuthResponse register(RegisterRequest request) {
@@ -35,7 +38,7 @@ public class AuthService {
         User newUser = new User(userId,
                 request.getDisplayName(),
                 request.getEmail(),
-                request.getPassword(),
+                passwordEncoder.encode(request.getPassword()),
                 handle);
         userRepository.save(newUser);
 
@@ -58,7 +61,7 @@ public class AuthService {
                 .orElseThrow(() -> new RuntimeException("Invalid email or password."));
 
         // check if password matches
-        if (!user.getPassword().equals(request.getPassword())) {
+        if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
             throw new RuntimeException("Invalid email or password.");
         }
 
