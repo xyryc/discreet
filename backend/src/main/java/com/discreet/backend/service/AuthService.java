@@ -5,6 +5,7 @@ import java.util.UUID;
 import org.springframework.stereotype.Service;
 
 import com.discreet.backend.dto.AuthResponse;
+import com.discreet.backend.dto.LoginRequest;
 import com.discreet.backend.dto.RegisterRequest;
 import com.discreet.backend.model.User;
 import com.discreet.backend.repository.UserRepository;
@@ -49,4 +50,27 @@ public class AuthService {
 
         return new AuthResponse(mockJwtToken, userDto);
     }
+
+    public AuthResponse login(LoginRequest request) {
+        // look for user with same email in db
+        // if not found throw an error
+        User user = userRepository.findByEmail(request.getEmail())
+                .orElseThrow(() -> new RuntimeException("Invalid email or password."));
+
+        // check if password matches
+        if (!user.getPassword().equals(request.getPassword())) {
+            throw new RuntimeException("Invalid email or password.");
+        }
+
+        // credentials are valid, then generate session token and return user profile
+        String mockJwtToken = "discreet_token_" + UUID.randomUUID().toString();
+        AuthResponse.UserDto userDto = new AuthResponse.UserDto(
+                user.getId(),
+                user.getDisplayName(),
+                user.getEmail(),
+                user.getHandle(), user.getBio());
+
+        return new AuthResponse(mockJwtToken, userDto);
+    }
+
 }
