@@ -52,7 +52,14 @@
             <dependency>                                       
                 <groupId>org.springframework.security</groupId>
                 <artifactId>spring-security-crypto</artifactId>
-            </dependency>                                                                                                                                                                                       
+            </dependency>        
+
+             <!-- PostgreSQL Driver for Supabase / Production -->                                                            
+            <dependency>           
+                <groupId>org.postgresql</groupId>                                 
+                <artifactId>postgresql</artifactId>            
+                <scope>runtime</scope>                         
+            </dependency>                                                                                                                                                                               
         </dependencies>                                                                                                                                                                                                        
                                                                                                                                                                                                                                
         <!-- Plugin to package and run the Spring Boot jar -->                                                                                                                                                                 
