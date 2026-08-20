@@ -637,41 +637,49 @@
 
 
             <!-- ========================================================= -->
-            <!-- 6. SIGN OUT BUTTON (NEUMORPHIC TACTILE DANGER)            -->
+            <!-- 6. SIGN OUT BUTTON (NEUMORPHIC CARDVIEW)                  -->
             <!-- ========================================================= -->
-            <FrameLayout
-                android:id="@+id/btn_logout"
+            <com.example.chatapplication.common.view.NeumorphCardView
                 android:layout_width="match_parent"
-                android:layout_height="56dp"
+                android:layout_height="wrap_content"
                 android:layout_marginBottom="24dp"
-                android:background="@drawable/bg_neu_danger_button"
-                android:clickable="true"
-                android:focusable="true">
+                app:neu_corner_radius="24dp"
+                app:neu_shadow_blur="10dp"
+                app:neu_shadow_distance="5dp">
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
+                <FrameLayout
+                    android:id="@+id/btn_logout"
+                    android:layout_width="match_parent"
+                    android:layout_height="54dp"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true">
 
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:src="@drawable/ic_baseline_logout_24"
-                        app:tint="@color/neu_danger" />
-
-                    <TextView
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:fontFamily="sans-serif-medium"
-                        android:text="Log Out from Discreet"
-                        android:textColor="@color/neu_danger"
-                        android:textSize="15sp"
-                        android:textStyle="bold" />
-                </LinearLayout>
-            </FrameLayout>
+                        android:layout_gravity="center"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/ic_baseline_logout_24"
+                            app:tint="@color/neu_danger" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:fontFamily="sans-serif-medium"
+                            android:text="Log Out from Discreet"
+                            android:textColor="@color/neu_danger"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </FrameLayout>
+            </com.example.chatapplication.common.view.NeumorphCardView>
 
             <!-- Brand Footer -->
             <TextView
