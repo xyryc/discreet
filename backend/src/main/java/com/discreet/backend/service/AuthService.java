@@ -10,16 +10,19 @@ import com.discreet.backend.dto.LoginRequest;
 import com.discreet.backend.dto.RegisterRequest;
 import com.discreet.backend.model.User;
 import com.discreet.backend.repository.UserRepository;
+import com.discreet.backend.security.JwtUtils;
 
 @Service
 public class AuthService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final JwtUtils jwtUtils;
 
     // inject UserRepository and password encoder
-    public AuthService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public AuthService(UserRepository userRepository, PasswordEncoder passwordEncoder, JwtUtils jwtUtils) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.jwtUtils = jwtUtils;
     }
 
     public AuthResponse register(RegisterRequest request) {
@@ -43,7 +46,7 @@ public class AuthService {
         userRepository.save(newUser);
 
         // return the AuthResponse DTO (Token + User data, no raw password)
-        String mockJwtToken = "discreet_token_" + UUID.randomUUID().toString();
+        String token = jwtUtils.generateToken((newUser.getId()), newUser.getEmail());
         AuthResponse.UserDto userDto = new AuthResponse.UserDto(
                 newUser.getId(),
                 newUser.getDisplayName(),
@@ -51,7 +54,7 @@ public class AuthService {
                 newUser.getHandle(),
                 newUser.getBio());
 
-        return new AuthResponse(mockJwtToken, userDto);
+        return new AuthResponse(token, userDto);
     }
 
     public AuthResponse login(LoginRequest request) {
@@ -66,14 +69,14 @@ public class AuthService {
         }
 
         // credentials are valid, then generate session token and return user profile
-        String mockJwtToken = "discreet_token_" + UUID.randomUUID().toString();
+        String token = jwtUtils.generateToken(user.getId(), user.getEmail());
         AuthResponse.UserDto userDto = new AuthResponse.UserDto(
                 user.getId(),
                 user.getDisplayName(),
                 user.getEmail(),
                 user.getHandle(), user.getBio());
 
-        return new AuthResponse(mockJwtToken, userDto);
+        return new AuthResponse(token, userDto);
     }
 
 }
