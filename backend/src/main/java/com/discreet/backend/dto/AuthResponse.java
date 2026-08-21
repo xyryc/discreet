@@ -23,13 +23,18 @@ public class AuthResponse {
         private String email;
         private String handle;
         private String bio;
+        private String status;
+        private String imageProfile;
 
-        public UserDto(String id, String displayName, String email, String handle, String bio) {
+        public UserDto(String id, String displayName, String email, String handle, String bio, String status,
+                String imageProfile) {
             this.id = id;
             this.displayName = displayName;
             this.email = email;
             this.handle = handle;
             this.bio = bio;
+            this.status = status;
+            this.imageProfile = imageProfile;
         }
 
         public String getId() {
@@ -50,6 +55,14 @@ public class AuthResponse {
 
         public String getBio() {
             return bio;
+        }
+
+        public String getStatus() {
+            return status;
+        }
+
+        public String getImageProfile() {
+            return imageProfile;
         }
     }
 }

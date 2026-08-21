@@ -4,13 +4,18 @@ import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.discreet.backend.dto.AuthResponse;
+import com.discreet.backend.dto.UpdateProfileRequest;
 import com.discreet.backend.security.JwtUtils;
 import com.discreet.backend.service.UserService;
+
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/v1/users")
@@ -53,5 +58,30 @@ public class UserController {
         AuthResponse.UserDto userProfile = userService.getUserById(userId);
 
         return ResponseEntity.ok(userProfile);
+    }
+
+    // PUT /api/v1/users/me (protected route)
+    @PutMapping("/me")
+    public ResponseEntity<AuthResponse.UserDto> updateProfile(
+            @RequestHeader(value = "Authorization", required = false) String authHeader,
+            @Valid @RequestBody UpdateProfileRequest request) {
+        // check authorization header
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            throw new RuntimeException("Missing or invalid Authorization header. Expected: Bearer <token>");
+        }
+
+        // extract token string (cut off "Bearer ")
+        String token = authHeader.substring(7);
+
+        // cryptographically validate the token
+        if (!jwtUtils.validateToken(token)) {
+            throw new RuntimeException("Invalid or expired JWT token.");
+        }
+
+        // extract userId and update profile in PostgreSQL/H2
+        String userId = jwtUtils.extractUserId(token);
+        AuthResponse.UserDto updatedProfile = userService.updateProfile(userId, request);
+
+        return ResponseEntity.ok(updatedProfile);
     }
 }

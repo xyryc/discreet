@@ -52,7 +52,9 @@ public class AuthService {
                 newUser.getDisplayName(),
                 newUser.getEmail(),
                 newUser.getHandle(),
-                newUser.getBio());
+                newUser.getBio(),
+                newUser.getStatus(),
+                newUser.getImageProfile());
 
         return new AuthResponse(token, userDto);
     }
@@ -74,7 +76,10 @@ public class AuthService {
                 user.getId(),
                 user.getDisplayName(),
                 user.getEmail(),
-                user.getHandle(), user.getBio());
+                user.getHandle(),
+                user.getBio(),
+                user.getStatus(),
+                user.getImageProfile());
 
         return new AuthResponse(token, userDto);
     }

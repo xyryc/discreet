@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.discreet.backend.dto.AuthResponse;
+import com.discreet.backend.dto.UpdateProfileRequest;
 import com.discreet.backend.model.User;
 import com.discreet.backend.repository.UserRepository;
 
@@ -24,7 +25,9 @@ public class UserService {
                 user.getDisplayName(),
                 user.getEmail(),
                 user.getHandle(),
-                user.getBio()))
+                user.getBio(),
+                user.getStatus(),
+                user.getImageProfile()))
                 .toList();
     }
 
@@ -38,6 +41,44 @@ public class UserService {
                 user.getDisplayName(),
                 user.getEmail(),
                 user.getHandle(),
-                user.getBio());
+                user.getBio(),
+                user.getStatus(),
+                user.getImageProfile());
+    }
+
+    // update user profile
+    public AuthResponse.UserDto updateProfile(String userId, UpdateProfileRequest request) {
+        // fetch users from database
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found: " + userId));
+
+        // update fields only if provided
+        if (request.getDisplayName() != null && !request.getDisplayName().trim().isEmpty()) {
+            user.setDisplayName(request.getDisplayName().trim());
+        }
+
+        if (request.getBio() != null) {
+            user.setBio(request.getBio().trim());
+        }
+
+        if (request.getStatus() != null && !request.getStatus().trim().isEmpty()) {
+            user.setStatus(request.getStatus().trim());
+        }
+
+        if (request.getImageProfile() != null) {
+            user.setImageProfile(request.getImageProfile());
+        }
+
+        // save updated user to PostgreSQL/H2
+        userRepository.save(user);
+
+        return new AuthResponse.UserDto(
+                user.getId(),
+                user.getDisplayName(),
+                user.getEmail(),
+                user.getHandle(),
+                user.getBio(),
+                user.getStatus(),
+                user.getImageProfile());
     }
 }
