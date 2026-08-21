@@ -78,7 +78,14 @@
                 <artifactId>jjwt-jackson</artifactId>       
                 <version>0.12.5</version>                   
                 <scope>runtime</scope>                      
-            </dependency>                                                                                                                                                                        
+            </dependency>  
+            
+            <!-- Swagger UI -->
+            <dependency>                                    
+                <groupId>org.springdoc</groupId>            
+                <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>                                    
+                <version>2.3.0</version>                    
+            </dependency>
         </dependencies>                                                                                                                                                                                                        
                                                                                                                                                                                                                                
         <!-- Plugin to package and run the Spring Boot jar -->                                                                                                                                                                 

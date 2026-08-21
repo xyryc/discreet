@@ -1,6 +1,5 @@
 package com.discreet.backend.controller;
 
-import com.discreet.backend.config.AppConfig;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
