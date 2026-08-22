@@ -81,4 +81,21 @@ public class UserService {
                 user.getStatus(),
                 user.getImageProfile());
     }
+
+    // update user profile avatar URL
+    public AuthResponse.UserDto updateAvatar(String userId, String avatarUrl) {
+        User user = userRepository.findById(userId).orElseThrow(
+                () -> new RuntimeException("User not found: " + userId));
+
+        user.setImageProfile(avatarUrl);
+        userRepository.save(user);
+
+        return new AuthResponse.UserDto(
+                user.getId(),
+                user.getDisplayName(),
+                user.getEmail(),
+                user.getHandle(),
+                user.getBio(), user.getStatus(),
+                user.getImageProfile());
+    }
 }
